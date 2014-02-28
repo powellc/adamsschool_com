@@ -1,0 +1,40 @@
+server {
+        server_name adamsschool.com;
+        rewrite ^ http://www.adamsschool.com$request_uri permanent;
+}
+server {
+        server_name beta.adamsschool.com;
+        rewrite ^ http://www.adamsschool.com$request_uri permanent;
+}
+
+server {
+        server_name www.adamsschool.com;
+        access_log      /var/log/nginx/adams.access.log;
+        error_log       /var/log/nginx/adams.error.log;
+        client_max_body_size 500M;
+
+        location /media {
+                root /var/django/adamsschool_com;
+                access_log   off;
+                expires      30d;
+        }
+
+        location /favicon.ico {
+                root /var/django/adamsschool_com/media/img;
+                access_log   off;
+                expires      30d;
+        }
+
+        location / {
+                include /etc/nginx/uwsgi_params;
+                uwsgi_pass unix:/var/django/run/adams.sock;
+        }
+
+        location /images/headers/iaflaground440.gif {
+                rewrite /images/headers/iaflaground440.gif http://penobscotbaypress.com/media/images/headers/iaflaground440.gif permanent;
+        }
+	location /Adams/Home.html {
+                rewrite /Adams/Home.html http://www.adamsschool.com/ permanent;
+	}
+
+}

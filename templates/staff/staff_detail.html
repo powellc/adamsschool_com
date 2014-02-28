@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load thumbnail placeholder_tags %}
+
+{% block title %}{{ object }} | Teachers | {{ block.super }}{% endblock %}
+
+{% block meta-keywords %}teachers staff{% endblock %}
+
+{% block main_content %}
+      <h3>{{object}}</h3>
+
+      {% render_placeholder object.main_content %}
+
+{% endblock %}
+
+{% block sidebar %}
+      {% if object.photo %}
+      <img src="{% thumbnail object.photo 300x0 %}" />
+      {% endif %}
+      {% if object.bio %}
+      <h4>About {{object.name}}</h4>
+      {{object.bio|safe}}
+      {% endif %}
+      {% render_placeholder object.sidebar%}
+{% endblock %}

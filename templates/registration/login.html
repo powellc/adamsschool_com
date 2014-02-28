@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Login</h3>
+
+                    <form method="post" action="{% url django.contrib.auth.views.login %}?next={{request.path}}" style="padding-left:20px;"class="login uniForm ">{% csrf_token %}
+{{form.as_p}}
+<input type="submit" value="Login" />
+</form>
+{% endblock %}

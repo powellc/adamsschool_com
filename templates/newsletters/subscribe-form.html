@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags cms_tags %}
+
+{% block title %}Newsletter Signup{% endblock title %}
+
+{% block page_header %}<h1>Newsletter Signup</h1>{% endblock %}
+
+{% block content %}
+    <div class="span10">
+    {% placeholder "content" %}
+    <h2>Subscribe</h2>
+    </div>
+
+    <div class="span6 content " id="{{request.current_page}}">
+        {% if form.errors %}
+            <div class="alert-message warning">
+                <p>Please double-check the data below.</p>
+            </div>
+        {% endif %}
+        <form action="." method="POST" class="subscribe-form">{% csrf_token %}
+            <input name="lists" id="letter" type="checkbox" class="checkbox" checked="" value="letter" />
+            <label for="letter" class="checkbox">Weekly Newsletter</label>
+            <div class="help-block">Every Friday, we'll send you a reminder of what's been going on at our school over the past week!</div>
+
+            <input name="lists" id="parents" class="checkbox" type="checkbox" value="parents" />
+            <label for="parents" class="checkbox">Parents List</label>
+            <div class="help-block">Receive notifications about events and important activities at the school as a parent.</div>
+            <hr />
+            {{ form.as_p }}
+            <input type="submit" class="button" value="Subscribe" />
+        </form>
+    </div>
+    <div class="span8">
+
+        <hr />
+        <p>
+        <!-- // MAILCHIMP UNSUBSCRIBE CODE \\ -->
+        <a href="http://adamsschool.us6.list-manage.com/unsubscribe?u=77c64d89d1d0e524b9fce30dc&id=e18409d2c3">Unsubscribe from our newsletter</a>
+        <!-- \\ MAILCHIMP UNSUBSCRIBE CODE // -->
+        </p>
+    </div>
+{% endblock content %}

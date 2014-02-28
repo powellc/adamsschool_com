@@ -1,0 +1,11 @@
+{% load thumbnail %}
+        <div id="staff-list">
+        {% for staff in staff_list %}
+            {% if staff.page_title %}<a href="{{ staff.get_absolute_url }}" alt="{{ staff }} page">{% endif %}
+        <dl class="staff" style="background:url('{% thumbnail staff.mug 300x200 upscale="True" crop="True" %}') no-repeat;">
+          <dt>{% if staff.page_title %}<a href="{{staff.get_absolute_url}}" alt="{{staff}}">{% endif %}{{staff.title}} {{staff.last_name}}{% if staff.page_title %}</a>{% endif %}</dt>
+          <dd>{% for pos in staff.positions.all %}{{pos}}<br/>{% if forloop.last %}</dd>{% endif %}{% endfor %}
+        </dl>
+            </a>
+        {% endfor %}
+      </div>

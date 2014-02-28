@@ -1,0 +1,19 @@
+{% extends "two_columns.html" %}
+{% load crispy_forms_tags cms_tags %}
+
+{% block title %}Thank you! | Newsletter{% endblock title %}
+
+{% block page_header %}<h1>Thank you for signing up!</h1>{% endblock %}
+
+{% block content %}
+    <div class="span1"></div>
+    <div class="span8 content " id="{{request.current_page}}">
+        {% placeholder "content" %}
+        <h2>Verification email sent</h2>
+        <p>Thank you so much for signing up for our newsletter! There's one more step before you start receiving
+            updates. <b>Check your email account for a verification link.</b> Once you click on that, we'll start
+            sending messages to you every Friday!</p>
+        <p>For now, you may checkout <a href="/newsletter/">our current newsletter</a> and start reading about the
+            amazing activities and learning going on at the Adams School.</p>
+    </div>
+{% endblock content %}

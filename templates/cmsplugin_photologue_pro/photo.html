@@ -1,0 +1,59 @@
+{% extends "cmsplugin_photologue_pro/cmsplugin_photologue_pro_base.html" %}
+{% load cmsplugin_photologue_pro_tags i18n %}
+
+{% block gallery %}
+{% if is_not_public %}
+<div class="photologue_pro_error">{% trans "The requested photo is not public." %}</div>
+{% else %}
+{% if not photo %}
+<div class="photologue_pro_error">{% trans "The requested photo does not exist." %}</div>
+{% else %}
+<script type="text/javascript">
+	// Arrow navigation
+	document.onkeydown = function(evt) {
+		evt = evt || window.event;
+		switch (evt.keyCode) {
+			{% if previous %}
+			case 37:
+				window.location = '{% url photologue_photo gallery.id previous.id %}';
+				break;
+			{% endif %}
+			{% if next %}
+			case 39:
+				window.location = '{% url photologue_photo gallery.id next.id %}';
+				break;
+			{% endif %}
+		}
+	};
+</script>
+<div class="photologue_pro_navigation">
+	<a href="{% url photologue_album gallery.id %}">&lt; {% trans "Back to album" %}</a>
+	{% if previous %}<a href="{% url photologue_photo gallery.id previous.id %}">{% trans "Previous photo" %}</a>{% endif %}
+	{% if next %}<a href="{% url photologue_photo gallery.id next.id %}">{% trans "Next photo" %}</a>{% endif %}
+</div>
+<div class="photologue_pro_photo_left clearfix">
+	<div class="photologue_pro_photo_details">
+		<img src="{{ photo.get_normal_url }}" alt="{{ photo.title }}" title="{{ photo.title }}" />
+		<h2>{{ photo.title }}</h2>
+		{% if photo.caption %}
+		<div class="photologue_pro_photo_caption">{{ photo.caption }}</div>
+		{% endif %}
+	</div>
+</div>
+<aside class="photologue_pro_photo_sidebar">
+	<div>
+		<p>{% blocktrans with photo.datetaken as date and photo.view_count as views %}This photo was taken on {{ date }} and was viewed {{ views }} times.{% endblocktrans %}</p>
+	</div>
+	{% if exif %}
+	{% include "cmsplugin_photologue_pro/exif.html" %}
+	{% endif %}
+	{% if photo.tags %}
+	<div class="photologue_pro_photo_tags">	
+		<h3>Tags</h3>
+		<p>{{ photo.tags }}</p>
+	</div>
+	{% endif %}
+</aside>
+{% endif %}
+{% endif %}
+{% endblock %}

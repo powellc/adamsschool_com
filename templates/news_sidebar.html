@@ -1,0 +1,9 @@
+<div id="news">
+  <h3>News</h3>
+  {% for obj in object_list %}
+  <h5 class="date">{{object.publish_on|date:"M, j Y"}}</h5>
+  <h4 class="right-ribbon title"><span class="ribbon-content">{{obj.title}}</span></h4>
+  <p class="attachment image_jpeg"><img src="{{obj.image.url}}" /></p>
+  <p>{{obj.content|truncatewords:"20"}}</p>
+  <p class="more"><a href="{{obj.get_absolute_url}}">Read more</a></p>
+</div>

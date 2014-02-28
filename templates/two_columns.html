@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        {% show_breadcrumb %}
+    </ul>
+{% endblock breadcrumbs %}
+
+
+{% block main_content %}
+    <h2>{{ request.current_page.get_title }}</h2>
+    {% placeholder "content" %}
+{% endblock main_content %}
+
+{% block submenu %}
+    <div class="row">
+        <div class="span15">
+            <ul class="submenu">
+                {% show_menu 1 100 0 1 %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+{% placeholder 'sidebar' %}
+{% endblock sidebar %}
+

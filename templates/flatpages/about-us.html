@@ -1,0 +1,91 @@
+{% extends 'flatpages/base.html' %}
+{% load typogrify_tags markup %}
+{% load classroom_tags %}
+{% load thumbnail %}
+
+{% block title %}{{flatpage.title}}{% endblock %}
+{% block js-load %}onload="load()" onunload="GUnload()"{% endblock %}
+{% block extra-head %}
+    {% get_primary_school as school %}
+    <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAArieRT_xwgFjdUCrGKqcFtRSmxf42tW8xsTS9f3H9MYQHFe_8JhQGxBlq98P01t9wnQS3A4BO52QwDA" type="text/javascript"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+    function load() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map"));
+        map.setCenter(new GLatLng({{school.lat_long}}), 16);
+      }
+    }
+    //]]>
+    </script>
+{% endblock %}
+
+
+{% block flatpage-content %}
+    <h3>{{flatpage.title}}</h3>
+    
+    <div id="left-content">
+    {{flatpage.content|markdown|typogrify}}
+        {% get_active_staff as staff %}
+        <h4 class="right-ribbon title">Our staff</h4>
+	{% get_active_principal as principal %}
+            {% if principal %}
+            <dl class="staff-list">
+                <dt><img src="{% thumbnail principal.mug 100x100 %}" /> </dt>
+                <dd class="name"><a href="{{principal.get_absolute_url}}">{{principal}}</a></dd>
+                <dd class="assignments">{% for pos in principal.positions.all %}{{pos.shortened_title}}{% if not forloop.last %}, {% endif %}{% endfor %}</dd>
+                <dd class="email">{{principal.email}}</dd>
+            </dl>
+	    {% endif %}
+	
+        {% for person in staff %}
+            {% ifnotequal person principal %}
+            <dl class="staff-list">
+                {% if person.mug %}<dt><img src="{% thumbnail person.mug 100x100 %}" /> </dt>
+                <dd class="name"><a href="{{person.get_absolute_url}}">{{person}}</a></dd>{% else %}
+		<dt class="name"><a href="{{person.get_absolute_url}}">{{person}}</a>{{person}}</dd>{% endif %}
+                <dd class="assignments">{% for pos in person.positions.all %}{{pos.shortened_title}}{% if not forloop.last %}, {% endif %}{% endfor %}</dd>
+                <dd class="email">{{person.email}}</dd>
+            </dl>
+	    {% endifnotequal %}
+        {% endfor %}
+
+    </div>
+    <div id="right-content">
+        {% get_primary_school as school %}
+        <div id="hcard-{{school.slug}}" class="vcard">
+            <div class="org">{{school}}</div>
+            <div><a class="url fn" href="{{school.principal.get_absolute_url}}">{{school.principal}}, Principal</a></div>
+            <div><a class="email" href="mailto:{{school.email}}">{{school.email}}</a></div>
+            <div class="adr">
+                <div class="mailing-address">P.O. Box {{school.po_box}}</div>
+                <div class="street-address">{{school.address}}</div>
+                <span class="locality">{{school.town}}</span>,
+                <span class="region">{{school.state}}</span> <span class="postal-code">{{school.zipcode}}</span>
+            </div>
+            <div id="tel">Tel: <span class="tel">{{school.phone}}</span></div>
+            <div id="fax">Fax: <span class="fax">{{school.fax}}</span></div>
+            <div class="map" id="map" style="width:380px; height:200px;"></div>
+        </div>
+
+        <div id="hcard-school-union-93" class="vcard">
+            <div class="org">School Union 93</div>
+            <div><a class="url fn" href="http://www.schoolunion93.org/administration/superintendent">Mark Hurvitt, Superintendent</a></div>
+            <div><a class="email" href="mailto:mhurvitt@schoolunion93.org">mhurvitt@schoolunion93.org</a></div>
+            <div class="adr">
+                <div class="mailing-address">P.O. Box 630</div>
+                <div class="street-address">20 Hinckley Ridge Road</div>
+                <span class="locality">Blue Hill</span>,
+                <span class="region">Maine</span> <span class="postal-code">04614-0630</span>
+            </div>
+            <div id="tel">Tel: <span class="tel">207-374-9927</span></div>
+            <div id="fax">Fax: <span class="tel">207-374-2951</span></div>
+        </div>
+
+	<img src="{% thumbnail school.photo 398x0 %}" alt="The Adams School building" />
+
+    </div>
+
+    <div class="clear"></div>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'multiblogs/base.html' %}
+{% load thumbnail %}
+{% load humanize %}
+
+{% block title %}{{blog.title}} | {{blog.blog_set.title}}{% endblock %}
+
+
+{% block content %}
+<div class="" id="main-content">
+    <h3>Blogs</h3>
+
+  <div class="span12" id="blog-content">
+<h4 class="right-ribbon title" id="update">{{blog.blog_set.title}}</h4>
+<div class="clear"></div>
+
+{% if blog.logo %}
+<h2><img src="{% thumbnail blog.logo 300x0 %}" alt="{{blog.title}}" /></h2>
+{% else %}
+<h2>{{blog.title}}</h2>
+{% endif %}
+<p>Add a new post to our blog!</p>
+
+<form method="post" action="">
+  {% if form.title.errors %}
+  <div class="alert-message danger error">{{form.title.errors}}</div>
+  {% endif %}
+  <div class="clearfix">
+    <label for="title">Title</label>
+    <div class="input">
+      {{form.title}}
+    </div>
+  </div>
+  {% if form.status.errors %}
+  <div class="alert-message danger error">{{form.status.errors}}</div>
+  {% endif %}
+  <div class="clearfix">
+    <label for="status">Status</label>
+    <div class="input">
+      {{form.status}}
+    </div>
+  </div>
+  {% if form.content.errors %}
+  <div class="alert-message danger error">{{form.content.errors}}</div>
+  {% endif %}
+  <div class="clearfix">
+    <label for="content">Content</label>
+    <div class="input">
+      {{form.content}}
+    </div>
+  </div>
+  {% if form.tags.errors %}
+  <div class="alert-message danger error">{{form.tags.errors}}</div>
+  {% endif %}
+  <div class="clearfix">
+    <label for="tags">Tags</label>
+    <div class="input">
+      {{form.tags}}
+    </div>
+  </div>
+  {% if form.author.errors %}
+  <div class="alert-message danger error">{{form.author.errors}}</div>
+  {% endif %}
+  <input type="hidden" name="author" value="{{user.pk}}" id="id_author"/>
+  {% if form.blog.errors %}
+  <div class="alert-message danger error">{{form.blog.errors}}</div>
+  {% endif %}
+  <input type="hidden" name="blog" value="{{blog.pk}}" id="id_blog"/>
+  {% if form.blog.errors %}
+  <div class="alert-message danger error">{{form.blog.errors}}</div>
+  {% endif %}
+  <input type="hidden" name="markup" value="m" id="id_markup"/>
+
+<input type="submit" value="Save" class="btn success" />
+<a href="{% url mb-blog-detail blog.blog_set.slug blog.slug %}" class="btn danger">Cancel</a>
+</form>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,17 @@
+{% extends 'wiki/base.html' %}
+
+
+{% block content %}
+<div id="main-content">
+	<h3>Wiki</h3>
+  <h4 class="right-ribbon title">Welcome to the Adams School Wiki</h4>
+  <div class="clear"></div>
+  <p>Browse our wiki pages for information about our school.</p>
+
+	{% if pages %}
+			{% for page in pages %}
+				<p class="ikipage-link"><a href="{{ page.get_absolute_url }}">{{ page.name }}</a></p>
+			{% endfor %}
+	{% endif %}
+
+{% endblock %}

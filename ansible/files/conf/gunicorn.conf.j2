@@ -1,0 +1,11 @@
+import multiprocessing
+
+bind = '127.0.0.1:30000'
+logfile = "/var/www/vhosts/{{ project_name }}/logs/gunicorn.log"
+max_requests = 1500
+workers = 4 # multiprocessing.cpu_count() * 2 + 1
+worker_class = 'gevent'
+django_settings = 'settings'
+pythonpath = '/var/www/vhosts/{{ project_name }}/code/'
+proc_name = '{{ project_name }}_gunicorn'
+timeout = 180

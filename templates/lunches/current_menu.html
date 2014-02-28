@@ -1,0 +1,48 @@
+<h4>Lunch for the week of {{current_menu.start_date|date:"F jS"}}</h4>
+<div class="current_menu">
+    <dl class="monday">
+    <dt>Monday</dt>
+    {% if current_menu.monday %}
+        <dd>{{current_menu.monday}}</dd>
+    {% else %}
+        <dd>No school</dd>
+    {% endif %}
+    </dl>
+
+    <dl class="tuesday">
+    <dt>Tuesday</dt>
+    {% if current_menu.tuesday %}
+        <dd>{{current_menu.tuesday}}</dd>
+    {% else %}
+        <dd>No school</dd>
+    {% endif %}
+    </dl>
+
+    <dl class="wednesday">
+    <dt>Wednesday</dt>
+    {% if current_menu.wednesday %}
+        <dd>{{current_menu.wednesday}}</dd>
+    {% else %}
+        <dd>No school</dd>
+    {% endif %}
+    </dl>
+
+    <dl class="thursday">
+    <dt>Thursday</dt>
+    {% if current_menu.thursday %}
+        <dd>{{current_menu.thursday}}</dd>
+    {% else %}
+        <dd>No school</dd>
+    {% endif %}
+    </dl>
+
+    <dl class="friday">
+    <dt>Friday</dt>
+    {% if current_menu.friday%}
+        <dd>{{current_menu.friday}}</dd>
+    {% else %}
+        <dd>No school</dd>
+    {% endif %}
+
+    </dl>
+</div>

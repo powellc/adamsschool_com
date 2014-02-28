@@ -1,0 +1,34 @@
+---
+- hosts: servers
+  vars_files:
+    - vars.yml
+  gather_facts: false
+  user: ${sys_user}
+  sudo: True
+  sudo_user: ${project_name}
+
+  tasks:
+  - name: Pull sources from the repository.
+    git: repo=${project_repo} dest=${project_root}/code/ version=${branch}
+    when: not vm
+
+  - name: Upgrade the virtualenv.
+    pip: requirements=${project_root}/code/etc/requirements.txt virtualenv=${project_root}/venv/
+
+  - name: Update Django conf file.
+    template: src=webapp_settings/local_settings.${nickname}.py.j2 dest=${project_root}/code/local_settings.py
+    notify: reload supervisor 
+
+  - name: Sync Django database.
+    shell: ${project_root}/venv/bin/python ${project_root}/code/manage.py syncdb --noinput --settings=settings --pythonpath=${project_root}/code/
+
+  - name: Migrate Django database.
+    shell: ${project_root}/venv/bin/python ${project_root}/code/manage.py migrate --fake --delete-ghost-migrations --noinput --settings=settings --pythonpath=${project_root}/code/
+
+  - name: Generate Django media.
+    shell: ${project_root}/venv/bin/python ${project_root}/code/manage.py collectstatic --noinput --settings=settings --pythonpath=${project_root}/code/
+    notify: restart nginx 
+
+  handlers:
+    - include: handlers.yml
+

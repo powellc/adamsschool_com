@@ -1,0 +1,25 @@
+{% extends "cmsplugin_photologue_pro/cmsplugin_photologue_pro_base.html" %}
+{% load cmsplugin_photologue_pro_tags i18n %}
+
+{% block gallery %}
+<div class="photologue_pro_album_index">
+	{% for gallery in galleries %}
+	<div class="photologue_pro_album">
+		<a href="{% url photologue_album gallery.id %}" class="photologue_pro_album_thumbnails order{% if gallery.filtered_photos|length > 0 %}{{ order|random }}{% else %}1{% endif %}">
+			{% for photo in gallery.filtered_photos|slice:":4" %}
+				{% polaroid_thumbnail photo photosize forloop.counter %}
+			{% empty %}
+			{% with counter=1 url=STATIC_URL|add:"images/nophotos.jpg" %}
+				{% trans "No photos available" as title %}
+				{% include "cmsplugin_photologue_pro/polaroid.html" %}
+			{% endwith %}
+			{% endfor %}
+		</a>
+		<h4 class="photologue_pro_album_title center">{{ gallery.title }}</h4>
+		<div class="photologue_pro_album_count center">{% blocktrans with gallery.filtered_photos|length as count %}{{ count }} photos{% endblocktrans %}</div>
+	</div>
+	{% empty %}
+	<div class="photologue_pro_error">{% trans "Sorry, there are no albums to show!" %}</div>
+	{% endfor %}
+</div>
+{% endblock %}

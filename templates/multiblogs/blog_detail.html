@@ -1,0 +1,72 @@
+{% extends 'multiblogs/base.html' %}
+{% load thumbnail %}
+{% load humanize %}
+
+{% block title %}{{object.title}} | {{object.blog_set.title}}{% endblock %}
+
+{% block menu %}
+{% if user in object.authors.all %}
+<div id="blogger-menu">
+    <p class="btn success"><a href="{% url mb-post-create object.blog_set.slug object.slug %}">Add a new post</a></p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row" id="main-content">
+    <h3>Blogs</h3>
+  <br/>
+<h4 class="right-ribbon title">{{object.blog_set.title}}</h4>
+<div class="clear"></div>
+
+  <div class="span16" id="blog-content">
+{% if object.logo %}
+<h3><img src="{% thumbnail object.logo 270x0 %}" alt="{{object.title}}" /></h3>
+{% else %}
+<h3>{{object.title}}</h3>
+{% endif %}
+
+
+{% for post in blog.get_posts %}
+<div class="post-preview" id="post-preview-{{post.slug}}">
+    <h4 class="title">{{post.title}}</h4>
+    <h5 class="author">by {{post.author.first_name}}</h5>
+    <h5 class="dateline">Posted {{post.publish_date|date:"D, N j, Y"}}</h5>
+    {% for att in post.get_attachments %}
+    	{% if att.content_type_class == "image_png" %}
+    	<p id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+        <a href="{{post.get_absolute_url}}"><img src="{% thumbnail att.attachment 200x100 %}" /></a>
+        </p>
+        {% else %}
+    	{% if att.content_type_class == "image_jpeg" %}
+    	<p id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+        <a href="{{post.get_absolute_url }}"><img src="{% thumbnail att.attachment 200x100 %}" /></a>
+        </p>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="content">
+    {{post.teaser|safe}}
+    </div>
+    <p><a href="{{post.get_absolute_url}}" alt="Read {{post}}">Continue reading</a></p>
+</div>
+{% endfor %}
+</div>
+
+  <div class="clear"></div>
+  <div class="span14" id="idebar-content">
+
+  <div class="clear"></div>
+<h3>About this blog</h3>
+{{object.rendered_description|safe}}
+<h3>Authors</h3>
+{% for a in object.authors.all %}
+<div class="author" id="author-{{object.username}}">
+<h4>{{a.first_name}}</h4>
+{% if a.get_profile.grade %}<p>grade: {{a.get_profile.grade}}</p>{% endif %}
+{% if a.get_profile.mug %}<p><img src="{% thumbnail a.get_profile.mug 120x0 %}" /></p>{% endif %}
+{% endfor %}
+</div>
+</div>
+{% endblock %}

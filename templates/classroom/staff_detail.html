@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load thumbnail humanize %}
+{% block title %}{{staff}} | Teacher{% endblock %}
+
+{% block content %}
+    <div class="row" id="main-content">
+      <h3>{{staff}}</h3>
+      <p class="back"><a class="btn success" href="{% url cl-staff-list %}">Back to teacher list</a></p>
+      <div class="span8" id="eft-content">
+          {% for pos in staff.positions.all %}
+            <p>{{pos}}</p>
+          {% endfor %}
+          <img src="{% thumbnail staff.photo 400x300 crop %}" alt="Photo of {{staff}}" />
+      {% if staff.websites.all %}
+	<h4>Links</h4>
+	<p>A collection of useful links for students and their parents</p>
+	<ul class="unstyled">
+         {% for site in staff.websites.all %}
+	 <li><a href="{{site.url}}">{{site}}</a></li>
+	{% endfor %}
+       {% endif %}
+<br/>
+    {% if staff.gcal %}
+	<h3>Calendar</h3>
+	{{staff.gcal|safe}}
+    {% endif %}
+      </div>
+      <div class="span5" id="ight-content">
+        </ul>
+	<br />
+        {% if staff.blog %}
+	<h3>{{staff.blog.title}}</h3>
+	{{staff.blog.rendered_description|safe}}
+	{% for e in staff.blog.get_posts %}
+	<div class="news-entry well">
+		<h4><a href="{{e.get_absolute_url}}">{{e.title}}</a></h4>
+		<h5 class="date">{{e.publish_date|naturalday}}</h5>
+		<h5>by {{e.author.first_name}}</h5>
+		{{e.description|safe}}
+		<a href="{{e.get_absolute_url}}">Read more</a>
+	</div>
+	{% endfor %}
+	{% endif %}
+
+    </div>
+    <div class="left" id="bottom-content">
+    </div>
+
+
+{% endblock %}
+

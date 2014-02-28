@@ -1,0 +1,12 @@
+{% load thumbnail %}
+<div id="staff-list">
+    {% for staff in staff_list %}
+        {% if staff.page_title %}<a href="{{ staff.get_absolute_url }}" alt="{{ staff }} page">{% endif %}
+        <dl class="staff-short">
+            <dt>{% if staff.page_title %}<a href="{{staff.get_absolute_url}}" alt="{{staff}}">{% endif %}{{staff.first_name}} {{staff.last_name}}{% if staff.page_title %}</a>{% endif %}</dt>
+            <dd><a href="mailto:{{ staff.email}}">{{ staff.email }}</a></dd>
+            <dd>{% for pos in staff.positions.all %}{{pos}}<br/>{% if forloop.last %}</dd>{% endif %}{% endfor %}
+        </dl>
+        </a>
+    {% endfor %}
+</div>

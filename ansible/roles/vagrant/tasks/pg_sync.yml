@@ -1,0 +1,3 @@
+- name: Sync the database with production
+  shell: psql ${dbname} < ${project_root}/code/${dbdump_file}
+  sudo_user: postgres

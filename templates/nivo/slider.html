@@ -1,0 +1,85 @@
+{% load i18n sekizai_tags %}
+{% load thumbnail %}
+
+
+{% addtoblock "css" %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}nivo/nivo-slider.css" type="text/css" media="screen" />
+{% endaddtoblock %}
+
+{% addtoblock "css" %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}nivo/themes/{{object.theme}}/{{object.theme}}.css" type="text/css" media="screen" />
+{% endaddtoblock %}
+
+{% addtoblock "js" %}
+    <script type="text/javascript" src="{{ STATIC_URL }}nivo/js/jquery.nivo.slider.pack.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        (function($){
+            var jqver = $('img[id^=nivo-slide]').each(function(){
+                var $img = $(this),
+                        idrx = /nivo-slide(\d+_\d+)-.+/ ,
+                        imgid = idrx.exec($img.attr('id'))[1],
+                        $txt = $('div[id=nivo-slide'+ imgid + '-text]');
+                $img.attr('title', $txt.html().trim());
+                $txt.remove();
+            }).jquery;
+
+            $.fn.dattr = function(e){
+                if ( jqver > '1.7.1') {
+                    return this.data(e);
+                } else {
+                    return this.attr('data-'+e);
+                }
+            };
+
+            $('div.nivoSlider').each(function(e){
+                var $d = $(this),
+                        vd = {
+                            effect: $d.dattr('effect'),
+                            animSpeed: $d.dattr('speed') - 0,
+                            pauseTime: $d.dattr('pause_time') - 0,
+                            directionNav: Boolean($d.dattr('arrows')-0),
+                            controlNavThumbs: Boolean($d.dattr('thumbs')-0),
+                            pauseOnHover: Boolean($d.dattr('pause_on_hover')-0),
+                            manualAdvance: Boolean($d.dattr('manual')-0),
+                            randomStart: Boolean($d.dattr('randomstart')-0),
+                            prevText: '{% trans 'prev'|capfirst %}',
+                            nextText: '{% trans 'next'|capfirst %}'
+                        };
+                $(this).nivoSlider(vd);
+            });
+        })(window.jQuery);
+        //]]>
+    </script>
+{% endaddtoblock %}
+
+<div    class="slider-wrapper theme-{{ object.theme }}"
+        {% if object.width %}
+        style="width: {{ object.width }}px;"
+        {% endif %}>
+    <div    id="nivoslider{{ object.pk }}" class="nivoSlider"
+            title="{{ object.title|default:'' }}"
+            {% if object.height %}
+            style="height: {{ object.height }}px;"
+            {% endif %}
+            data-effect="{{ object.effect }}"
+            data-speed="{{ object.anim_speed }}"
+            data-pause_time="{{ object.pause_time }}"
+            data-arrows="{{ object.arrows|yesno:'1,0' }}"
+            data-thumbs="{{ object.thumbnails|yesno:'1,0' }}"
+            data-pause_on_hover="{{ object.pause_on_hover|yesno:'1,0' }}"
+            data-manual="{{ object.manual_advance|yesno:'1,0' }}"
+            data-randomstart="{{ object.random_start|yesno:'1,0' }}">
+        {% for img in images %}{% spaceless %}
+            <img    id="nivo-slide{{object.pk}}_{{img.pk}}-image"
+                    src="{% if object.size %}{% thumbnail img.image object.size crop upscale %}{% else %}{% thumbnail img.image 500x0 crop upscale %}{% endif %}"
+                    data-thumb="{{ img.image.icons.64 }}"
+                    alt="{{img.name|default:''}}" />
+
+            <div id="nivo-slide{{ object.pk }}_{{ img.pk }}-text">
+                {{ img.description|default:''|safe }}
+            </div>
+        {% endspaceless %}
+        {% endfor %}
+    </div>
+</div>

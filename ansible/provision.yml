@@ -1,0 +1,97 @@
+---
+- hosts: servers
+  vars_files:
+    - vars.yml
+  gather_facts: false
+  user: ${sys_user}
+  sudo: True
+
+  tasks:
+  - name: Create the project directory.
+    file: state=directory path=${project_root}
+
+  - name: Create the project logs directory.
+    file: state=directory path=${project_root}/logs/
+
+  - name: Create user.
+    user: home=${project_root}/ name=${project_name} state=present
+
+  - name: Update the project directory.
+    file: group=${project_name} owner=${project_name} mode=755 state=directory path=${project_root}
+
+  - name: Install required system packages.
+    apt: pkg=${item} state=installed update-cache=yes
+    with_items: ${system_packages}
+
+  - name: Install required Python packages.
+    easy_install: name=${item}
+    with_items: ${python_packages}
+
+  - name: Mount code folder.
+    file: src=/vagrant/ path=${project_root}/code owner=${sys_user} group=${sys_user} state=link
+    when: vm
+
+  - name: Create the SSH directory.
+    file: state=directory path=${project_root}/.ssh/
+
+  - name: Upload SSH known hosts.
+    copy: src=known_hosts dest=${project_root}/.ssh/known_hosts mode=0600
+
+  - name: Upload SSH key.
+    copy: src=key dest=${project_root}/.ssh/id_rsa mode=0600
+
+  - name: Upload SSH public key.
+    copy: src=files/ssl/${project_name}.key.encrypted dest=${project_root}/ssl/${project_name}.key
+    when: not vm
+
+  - name: Create SSL folders for NGINX
+    file: group=${project_name} owner=${project_name} mode=755 state=directory path=/etc/nginx/ssl/
+    when: not vm
+
+  - name: create self-signed SSL cert
+    command: openssl req -new -nodes -x509 -subj "/C=US/ST=Oregon/L=Portland/O=IT/CN=${ansible_fqdn}" -days 3650 -keyout /etc/nginx/ssl/server.key -out /etc/nginx/ssl/server.crt -extensions v3_ca creates=/etc/nginx/ssl/server.crt
+    when: not vm
+
+  - name: Change permissions.
+    shell: chown -R ${project_name}:${project_name} ${project_root}
+
+  - name: Install nginx configuration file.
+    template: src=files/conf/nginx.{{nickname}}.conf.j2 dest=/etc/nginx/sites-enabled/${project_name}
+
+  - name: Install nginx site config file
+    template: src=files/conf/nginx.global.conf.j2 dest=/etc/nginx/nginx.conf
+    notify: restart nginx
+
+  - name: Install supervisor configuration file.
+    template: src=files/conf/supervisor.{{nickname}}.conf.j2 dest=/etc/supervisor/conf.d/${project_name}.conf
+
+  - name: Install gunicorn conf file.
+    template: src=files/conf/gunicorn.conf.j2 dest=/etc/${project_name}_gunicorn.py mode=777
+
+  - name: Install newrelic ini file.
+    template: src=files/conf/newrelic.ini.j2 dest=/etc/${project_name}_newrelic.ini mode=777
+    when: vm
+
+  - name: Change access permissions for PostgreSQL
+    copy: src=files/conf/pg_hba.conf dest=/etc/postgresql/9.1/main/pg_hba.conf
+    sudo_user: postgres
+    notify:
+      - restart postgresql
+
+  - name: Create the database.
+    postgresql_db: db=${dbname} 
+    sudo_user: postgres
+
+  - name: Sync the database with production
+    shell: psql ${dbname} < ${project_root}/code/${dbdump_file}
+    sudo_user: postgres
+    when: vm
+
+  - name: Create database user.
+    postgresql_user: db=${dbname} user=${dbuser} password=${dbpassword} state=present priv=ALL role_attr_flags=SUPERUSER
+    sudo_user: postgres
+
+  handlers:
+    - include: handlers.yml
+
+- include: deploy.yml

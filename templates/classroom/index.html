@@ -1,0 +1,14 @@
+{% extends "interior_page.html" %}
+{% load announcement_tags markup %}
+{% load thumbnail %}
+
+{% block main_content %}    
+  <h2>Teachers</h2>
+{{object_list}}
+  
+  {% for pos in object_list %}
+  <div id="teacher">
+  {{pos}}
+  </div>
+  {% endfor %}
+{% endblock %}

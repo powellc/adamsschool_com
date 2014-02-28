@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load cms_tags menu_tags sekizai_tags slideshow_tags thumbnail %}
+{% block title %}Welcome | {{ block.super }}{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    $('#slidorion').slidorion({
+          speed: 1500,
+          interval: 1500,
+          hoverPause: true
+    });
+});
+  </script>
+{% endblock %}
+
+{% block top_content %}
+  <div class="span12">
+    {% active_slideshow as slideshow %}
+    <div id="slidorion" class="slidorion-container">
+      <div id="slider">
+        {% for slide in slideshow.slide_set.all %}
+        <div class="slide"><a href="{{slide.target_url}}"><img src="{% thumbnail slide.photo 748x450 crop="smart" %}" alt="{{slide}}" /></a></div>
+        {% endfor %}
+      </div>
+      <div id="accordion">
+        {% for slide in slideshow.slide_set.all %}
+        <div class="link-header">{{slide}}</div>
+        <div class="link-content">
+          {{slide.description}}
+          {% if slide.target_url %}
+          <br>
+          <a href="{{slide.target_url}}">Learn more &raquo;</a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}    
+  <div id="left-content" class="span6">
+    {% placeholder "left" %}
+  </div>
+
+  <div id="right-content" class="span4">
+    {% placeholder "right" %}
+  </div>
+{% endblock content %}

@@ -1,0 +1,59 @@
+{% load i18n humanize thumbnail %}
+
+<h4 class="right-ribbon title"><span class="ribbon-content">{% trans article.title%}</span></h4>
+<!-- AddThis Button BEGIN -->
+<p class="print clear">
+{% if user.is_authenticated %}<a href="http://www.adamsschool.com/admin/articles/article/{{article.pk}}" class="btn danger">Edit</a>{% endif %}
+<form><input id="print-button" type="button" value=" Print this page "
+onclick="window.print();return false;" /></form> 
+</p>
+<!-- AddThis Button END -->
+<h5 class="dateline">{{ article.publish_date|date:"l, F j, Y"}}</h5>
+
+<div class="article-images">
+{% for att in article.attachments.all %}
+	{% if att.content_type_class == "image_png" %}
+	<dl id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+           <dt><img src="{% thumbnail att.attachment 320x220 crop %}" /></dt>
+	   <dd>{{att.caption}}</dd>
+	</dl>
+    {% else %}
+	{% if att.content_type_class == "image_jpeg" %}
+	<dl id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+           <dt><img src="{% thumbnail att.attachment 320x220 crop %}" /></dt>
+	   <dd>{{att.caption}}</dd>
+	</dl>
+    {% endif %}
+    {% endif %}
+{% endfor %}
+<div class="clear"></div>
+</div>
+
+    <div class="article-body">
+      {{ article.rendered_content|safe }}
+    </div>
+
+    {% for att in article.attachements.all %}
+	{% if not att.content_type_class == "image_png" and not att.content_type_class == "image_jpeg" %}
+	<dl id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+           <dt>{{att.caption}}</dd>
+           <dd><a href="{{att.attachment.url}}" alt="{{att}}">{{att}}</a></dd>
+	</dl>
+    {% endif %}
+    {% endfor %}
+    
+<div id="article-nav" class="article-nav">
+    {% if article.get_next_article %}
+    <p class="nav" id="next-article">
+        <strong>{% trans 'Next' %}</strong>:
+        <a href="{{ article.get_next_article.get_absolute_url }}">{{ article.get_next_article.title }}</a>
+    </p>
+    {% endif %}
+
+    {% if article.get_previous_article %}
+    <p class="nav" id="prev-article">
+        <strong>{% trans 'Previous' %}</strong>:
+        <a href="{{ article.get_previous_article.get_absolute_url }}">{{ article.get_previous_article.title }}</a>
+    </p>
+    {% endif %}
+</div>

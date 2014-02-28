@@ -1,0 +1,15 @@
+<div class='weather'>
+    <div class="icon">
+        <a id="weather" href="#" data-placement="right" data-toggle="tooltip" title="{{ weather_info.location.city }}: {{ weather_info.current_observation.temp_f }}° and {{ weather_info.current_observation.weather }}"><img width="50" height="50" src="{{ weather_info.current_observation.icon_url }}" /></a>
+    </div>
+    <div class="loc-temp">
+        <div class="loc">
+            {{ weather_info.location.city }},
+            {{ weather_info.location.state }}
+        </div>
+        <div class="temp-observe">
+            <span class="temp">{{ weather_info.current_observation.temp_f }}°</span>
+            <span class="observe">{{ weather_info.current_observation.weather }}</span>
+        </div>
+    </div>
+</div>

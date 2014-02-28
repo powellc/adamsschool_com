@@ -1,0 +1,31 @@
+{% load cmsplugin_photologue_pro_tags i18n %}
+
+{% block gallery %}
+{% if is_not_public %}
+<div class="photologue_pro_error">{% trans "The requested album is not public." %}</div>
+{% else %}
+<h3>{{ gallery.title }}</h3>
+<div class="photologue_pro_album_index">
+	{% for photo in photos.object_list %}
+	<div class="photologue_pro_photo">
+		<a href="{% url photologue_photo gallery.id photo.id %}">{% polaroid_thumbnail photo %}</a>
+		{% comment %}<h4 class="photologue_pro_photo_title center">{{ photo.title }}</h4>{% endcomment %}
+	</div>
+	{% empty %}
+	<div class="photologue_pro_error">{% trans "Sorry, there are no photos to show!" %}</div>
+	{% endfor %}
+</div>
+{% if pages|length > 1 %}
+<div class="photologue_pro_pagination">
+	{% trans "Page" %}:
+	{% for page in pages %}
+	{% ifequal page current_page %}
+	<span>{{ page }}</span>
+	{% else %}
+	<a href="?page={{ page }}">{{ page }}</a>
+	{% endifequal %}
+	{% endfor %}
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

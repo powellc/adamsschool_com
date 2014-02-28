@@ -1,0 +1,109 @@
+{% extends 'multiblogs/base.html' %}
+{% load i18n %}
+{% load thumbnail %}
+{% load humanize %}
+
+{% block title %}{{object.title}} | {{object.blog_set.title}}{% endblock %}
+
+{% block content %}
+<div id="main-content">
+    <h3>Blogs</h3>
+
+    <h4 class="right-ribbon title">{{object.blog.blog_set.title}}</h4>
+    <div class="clear"></div>
+    
+{% if object.blog.logo %}
+<h2><img src="{% thumbnail object.blog.logo 270x0 %}" alt="{{object.title}}" /></h2>
+{% else %}
+<h2><a href="{{ object.blog.get_absolute_url }}" alt="Back to {{object.blog}}">{{object.blog.title}}</a></h2>
+{% endif %}
+
+    <div class="post" id="post-{{object.slug}}">
+        <h3>{{object.title}}</h3>
+        <h5 class="dateline">{{object.publish_date|naturalday}}</h5>
+        <h5>by {{object.author.first_name}}</h5>
+
+        {% for att in object.get_attachments %}
+    	  {% if att.content_type_class == "image_png" %}
+    	  <p id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+          <img src="{% thumbnail att.attachment 420x220 %}" />
+          </p>
+          {% else %}
+    	  {% if att.content_type_class == "image_jpeg" %}
+    	  <p id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+          <a href="{{att.attachment.url }}"><img src="{% thumbnail att.attachment 420x220 %}" /></a><br />
+          {{att.caption}}
+          </p>
+          {% else %}
+    	  <p id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+          <a href="{{att.attachment.url }}">{{att.attachment}}</a>
+          {% endif %}
+          {% endif %}
+          </p>
+        {% endfor %}
+        <div class="content">
+        {{object.rendered_content|safe}}
+        </div>
+    
+    </div>
+    <div id="article-nav" class="article-nav">
+        {% if object.get_next_article %}
+        <p class="nav" id="next-article">
+            <strong>{% trans 'Next' %}</strong>:
+            <a href="{{ object.get_next_article.get_absolute_url }}">{{ object.get_next_article.title }}</a>
+        </p>
+        {% endif %}
+    
+        {% if object.get_previous_article %}
+        <p class="nav" id="prev-article">
+            <strong>{% trans 'Previous' %}</strong>:
+            <a href="{{ object.get_previous_article.get_absolute_url }}">{{ object.get_previous_article.title }}</a>
+        </p>
+        {% endif %}
+    <div class="alert-message danger">Are you sure you wish to delete the post below?
+      <form action="" method="post" id="confirm">{% csrf_token %}
+            <input type="submit" value="Confirm Delete" class="btn danger" />
+            <a href="{{object.get_absolute_url}}" class="btn">Cancel</a>
+        </form>
+    </div>
+    </div>
+
+  <div id="page-footer">
+    {% for u in object.blog.authors.all %}
+	{% if u.staff_set.all %}
+        {% for s in u.staff_set.all %}{% if forloop.first %}
+	<a class="btn primary" href="{{s.get_absolute_url}}">Back to {{s}}'s page</a>
+	{% endif %}{% endfor %}
+        {% endif %}
+    {% endfor %}
+        <a class="btn" href="{% url mb-blog-set-detail object.blog.blog_set.slug %}">Back to blogs</a>
+        {% ifequal request.user object.author %}
+	<a class="btn" href="{% url mb-post-update object.blog.blog_set.slug object.blog.slug object.publish_date.year object.slug %}">Edit</a>
+        {% endifequal %}
+  </div>
+
+{% endblock %}
+
+{% block sidebar-content %}
+    {% for att in object.get_attachments %}
+    	{% if att.content_type_class == "image_png" %}
+    	<p id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+        <img src="{% thumbnail att.attachment 420x220 %}" />
+        </p>
+        {% else %}
+    	{% if att.content_type_class == "image_jpeg" %}
+    	<p id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+        <a href="{{att.attachment.url }}"><img src="{% thumbnail att.attachment 420x220 %}" /></a>
+        </p>
+        {% endif %}
+        {% if not att.content_type_class == "image_png" or att.content_type_class == "image_jpeg" %}
+    	<p id="attachement-{{forloop.counter}}" class="image-attachment ct_{{ att.content_type_class }}">
+        <a href="{{att.attachment.url }}">{{att.attachment}}</a>
+        {% endif %}
+        {% endif %}
+        </p>
+
+    {% endfor %}
+
+
+{% endblock %}

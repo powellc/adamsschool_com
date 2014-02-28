@@ -1,0 +1,38 @@
+{% load i18n thumbnail sekizai_tags %}
+{% addtoblock "css" %}<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}cmsplugin_filer_folder/css/slideshow.css" media="screen, projection" />{% endaddtoblock "css" %}
+{% addtoblock "js" %}<script type="text/javascript" src="{{ STATIC_URL }}cmsplugin_filer_folder/js/jquery.cycle.lite-1.0.js"></script>{% endaddtoblock "js" %}
+{% addtoblock "js" %}
+<script type="text/javascript">
+//<![CDATA[
+jQuery(document).ready(function ($) {
+    $('.cmsplugin_filer_folder_slidshow').cycle({
+        fx: 'fade'
+    });
+});
+//]]>
+</script>
+{% endaddtoblock %}
+
+
+{% firstof object.title object.folder.name  %}
+
+{% if object.view_option == "list" %}
+    <div class="cmsplugin_filer_folder_list" id="folder_{{ instance.id }}">
+        <!--The files should go there    -->
+        {% if folder_images %}
+        {% for image in folder_images %}
+        <div style="float:left; margin:10px; border:1px solid #ccc;"><img src="{% thumbnail image.file 320x170 crop="True" upscale="True" %}" width="320" height="170" alt="{{ image.label }}"></div>
+        {% endfor %}
+        {% endif %}
+        <p><a href="http://www.adamsschool.com/photos/">View more photos on our site &raquo;</a></p>
+    </div>
+{% else %}
+    <!-- start: slideshow -->
+    <div class="cmsplugin_filer_folder_slidshow" id="folder_{{ object.id }}">
+        {% for image in folder_images %}
+            <img src="{% thumbnail image.file 200x200 crop="True" upscale="True" %}">
+        {% endfor %}
+    </div>
+    <!-- end: gallery -->
+{% endif %}
+

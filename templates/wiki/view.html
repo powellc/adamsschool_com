@@ -1,0 +1,70 @@
+{% extends 'wiki/base.html' %}
+{% load wiki %}
+
+{% block title %}{{page.name|de_camel_case}} | Wiki{% endblock %}
+{% block meta-keywords %}{{page.name|de_camel_case}}{% endblock %}
+
+{% block content %}
+<div id="main-content">
+  <p class="print-header"><img src="{{MEDIA_URL}}img/adams-school-medium-logo.png" /></p>
+  <h3 class="wiki-header"><a href="{% url wiki-index %}">Wiki</a></h3>
+  <h4 class="right-ribbon title">{{page.name|de_camel_case}}</h4>
+  <div class="clear"></div>
+
+	{% if not page.id %}
+		<p>This page does not exist, <a href="{% url wiki-edit-page page %}">create it now</a>?</p>
+    {% else %}
+      {% if user.is_authenticated %}
+      <p class="back"><a class="btn success" href="{% url wiki-edit-page page %}" alt="Edit {{page}}">Edit this page</a></p>
+      {% endif %}
+        {% if revision.id %}
+
+        <div class="wikitext">
+          
+          <p>Last updated {{ revision.date|date:'N j, Y, P' }}</p>
+          
+            {% block wikitext %}
+                {{ revision.rendered|safe }}
+            {% endblock %}
+            </div>
+            <hr />
+            <p class="wiki-meta">Revision #{{ revision.counter }}, last edited by {{ revision.get_editor_name }}</p>
+        
+            <p class="wiki-nav">
+            {% block wikinav %}
+                <a href="{% url wiki-view-diff page revision %}">view changes</a>
+                |
+                {% if revision.get_prev %}
+                    <a href="{{ revision.get_prev.get_absolute_url }}">previous</a>
+                {% else %}
+                    previous
+                {% endif %}
+                |
+                {% if revision.get_next %}      
+                    <a href="{{ revision.get_next.get_absolute_url }}">next</a>
+                {% else %}
+                    next
+                {% endif %}
+            {% endblock %}
+            </p>
+        {% else %}
+            This page has no revisions.
+        {% endif %}
+	{% endif %}
+
+<div class="clear"></div>
+</div>
+
+
+{% endblock %}
+
+
+{% block footer %}
+	{% if page.id %}
+	    {% if not next %}
+		<a href="{% url wiki-edit-page page %}">Edit this page</a> |
+		{% endif %}
+	{% else %}
+		<a href="{% url wiki-edit-page page %}">Create this page</a> |
+	{% endif %}
+{% endblock %}

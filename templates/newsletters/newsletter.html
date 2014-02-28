@@ -1,0 +1,319 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load thumbnail placeholder_tags typogrify_tags %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{{object.publish_on|date:"F j"}} Newsletter | Adams School</title>
+<style>
+thead { display:table-header-group }
+tfoot { display:table-footer-group }
+
+#main { background:#eee; }
+div.photologue_pro_photo { width:350px; text-align:center; height:300px; float:left; margin-right:2em;}
+div.photologue_pro_photo img { border:1px solid #aaa; }
+div.photologue_pro_photo:hover { color:#70A76E; }
+div.photologue_pro_photo img:hover { border:1px solid #70A76E; }
+div.photologue_pro_album_index { display:block; clear:both; }
+span.return a { color: #ccc; margin-left:10px; text-decoration:none;}
+span.return a:hover { color:black; }
+a { color:#aaa; text-decoration:none; font-size:10pt; padding:auto; padding-top:0;}
+a.url:hover { color:black; }
+
+.left { margin-right:1em; float:left; width:200px;}
+.right { margin-left:1em; float:right; width:200px;}
+.full { width:100%; }
+.title { clear:both; float:left; display:block; padding:0; margin:0; padding:5px; display:none;}
+.hentry a { color:black; }
+.hentry h4 { color:black; margin-bottom:0; font-size:24pt; font-style:italic; }
+.hentry .published { display:none; }
+.hentry a[rel~=category] { float:; color:#aaa; }
+.hentry { border-bottom:2px solid #eee; }
+
+h1, h2, h3, h4, h5, h6 { text-transform:uppercase; }
+h1.p1, h2.p1, h3.p1 { padding-top:10px; font-size:12pt; }
+.main { width: 100%; float:left;}
+.sidebar { width: 300px; float:right; }
+.lighthouse { border: none; right: 90px; position: absolute; float:right; }
+</style>
+<style type="text/css" media="print">
+#main { background:white; }
+</style>
+</head>
+
+<body style="font-family:Lucida Grande, Lucida Grande, Arial; line-height:1.4em;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="line-height:1.3em; z-index:0; position:relative">
+  <tr>
+    <td id="main" align="center" valign="top" bgcolor="#f6f3e4" style="z-index:0; position:relative;"><br>
+    <br>
+    <table width="800" border="0" cellspacing="0" cellpadding="0" style="z-index:0; position:relative;">
+      <tr>
+        <td align="center" valign="top" style="padding-left:13px; padding-right:13px; background-color:#ffffff;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="" valign="" style="position:relative; margin-top:1em; font-family:Lucida Grande, Arial, sans-serif; font-size:48px;">
+		    <table width=100%><tr style="position:relative; ">
+               <td valign="bottom" style="color:#aaa; font-size: 9pt;"><img src="{{STATIC_URL}}img/adams-school-logo.png" width="175" style="margin-top:25px;" /><br>207-326-8608&nbsp;&bull;&nbsp;<a class="url" href="http://www.adamsschool.com">http://www.adamsschool.com</a></td>
+	       <td style="position:relative; text-align:right; color:#555; font-size:27px;padding-top:10px;">
+		       <h2 style="letter-spacing:-1px; padding-right:120px; margin-bottom:-115px; text-transform:capitalize;">The Lighthouse</h2>
+                   	<img class="lighthouse" src="{{ STATIC_URL }}img/dyce-head-light.png" width=120px style="right:6px; top:20px; z-index:1; position: absolute;"/>
+               </td>
+              </tr></table>
+            </td>
+          </tr>
+          
+          <tr style="z-index:20;">
+            <td align="right" valign="middle" style="padding-top:7px; z-index:20">
+              <table border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td height="28" width="800" align="left" valign="middle" bgcolor="#70A76E" style="position:relative; z-index:2; padding:0px; padding-left:15px;padding-right:60px; font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; font-size:16px; color:#ffffff; ">News for the week of {{object.publish_on|date:"F j, Y"}} from Castine, Maine </td>
+              </tr>
+            </table></td>
+          </tr>
+          
+          
+          {% if object.header %}
+          <tr>
+            <td align="center" valign="middle" style="position:relative; z-index:10; padding-top:0px;"><img src="{% thumbnail object.header "800x340" crop="smart" %}" width="800" height="340" style="display:block; border:1px solid #ccc;">
+              {% comment %}
+              {% if object.header.name %}
+              <p style="text-size:7pt; float:right; font-style:italic; color:#ccc; padding-right:10px; margin-top:0px;">{{object.header.name}}</p>
+              {% endif %}
+              {% endcomment %}
+            </td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; font-size:24px; padding-top:15px; padding-bottom:5px;"><i>{{object.header_caption}}</i></td>
+          </tr>
+          <tr>
+          <tr>
+            <td align="left" valign="top" style="padding-bottom:15px; padding-top:;">{{object.header_description}}</td>
+          </tr>
+          {% endif %}
+          <tr style="z-index:20;">
+                  <td width="200" style="margin-left:20px; padding:15px; background:#143; color:white;" valign="top" id="contents">
+                     <h3>In this issue</h3>
+                     <ul style="list-style:none; margin:0; padding:0; line-height:1.4em; ">
+                       {% for section in object.section_set.all %}
+                       <li><a style="color:white; text-decoration:underline;" href="#section-{{section.id}}">{{section.title|typogrify}} &mdash; {{section.category}}</a></li>
+                       {% endfor %}
+                       {% if object.blog_posts.all %}
+                       <li><a style="color:white; text-decoration:underline;" href="#section-classroom-news">Classroom News</a></li>
+                       {% for post in object.blog_posts.all %}
+                       <li><a style="font-size:8pt; color:white; text-decoration:underline;" href="#classroom-{{post.id}}">{{ post.title|typogrify }} &mdash; {{ post.categories.all.0|typogrify }}</a></li>
+                       {% endfor %}
+                       {% endif %}
+		       {% if object.lunch_menu %}
+                       <li><a style="color:white; text-decoration:underline;" href="#lunch-menu">Next week's lunch menu</a></li>
+                       {% endif %}
+                     </ul>
+                  </td>
+          </tr>
+          <!--- End of header section --->
+
+          <!---
+          <tr >
+            <td align="center" valign="top" style="padding-bottom:15px; padding-top:15px;"><img src="{{STATIC_URL}}img/newsletter/divider.gif" width="780" height="28" /></td>
+          </tr>
+          
+            <tr id="latest">
+                <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; padding-left:0px; color:#ccc; font-size:18px; padding-bottom:5px;"><i>Latest News</i></td>
+            </tr>
+            <tr>
+                <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; font-size:16px; line-height:1.4em;">{{section.page_content|safe}}</td>
+            </tr>
+         -->
+
+          
+          {% for section in object.section_set.all %}
+          <tr >
+            <td align="center" valign="top" style="padding-bottom:15px; padding-top:15px;"></td>
+          </tr>
+          <!--- Start section {{section.title}} --->
+      	  {% if section.category %}
+          <tr id="section-{{section.id}}">
+            <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#ccc; font-size:18px; padding-bottom:5px;"><i>{{ section.category|typogrify }}</i></td>
+          </tr>
+      	  {% endif %}
+          {% if not section.sidebar %}
+          <tr>
+            <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; font-size:22px; padding-bottom:5px;"><i>{{ section.title|typogrify }}</i><span class="return"><a href="#contents">&uArr;</a></span></td>
+          </tr>
+          <tr>
+            <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; padding:20px; font-size:16px; line-height:1.4em;">
+                {% if section.image %}
+                <img src="{{section.image.url}}" class="{{section.image_position}}">
+		{% endif %}
+        	{{ section.page_content|safe }}
+	        </td>
+          </tr>
+          {% else %}
+          <tr>
+          <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="350" align="left" valign="top"><table width="500" border="0" cellspacing="0" cellpadding="0">
+                  <tr >
+                    <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; font-size:22px; padding-bottom:5px;"><i>{{ section.title|typogrify }}</i><span class="return"><a href="#contents">&uArr;</a></span></td>
+                  </tr>
+                  <tr>
+                    <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; padding-left:20px; font-size:16px; line-height:1.4em;">
+                        <div class="main">{{ section.page_content|safe }}</div>
+                    </td>
+                  </tr>
+                  </table></td>
+                <td width="250" align="right" valign="top"><table width="250" border="0" cellspacing="0" cellpadding="0">
+                  <tr >
+                    <td align="left" valign="top" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; font-size:13px; color:#555; padding:10px;">{{ section.sidebar_content }}</td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table></td>
+          </tr>
+          
+          {% endif %}
+          <!--- End section {{section.title}} --->
+
+          {% if not forloop.last %}
+          <tr>
+            <td align="center" valign="middle" style="padding-bottom:15px; padding-top:15px;"><img src="{{STATIC_URL}}img/newsletter/divider.gif" width="780" height="28" /></td>
+          </tr>
+          {% endif %}
+          
+          {% endfor %}
+          
+          {% if object.blog_posts.all %}
+          <tr>
+            <td align="center" id="blogs" valign="middle" style="padding-bottom:15px; padding-top:15px;"><img src="{{STATIC_URL}}img/newsletter/divider.gif" width="780" height="28" /></td>
+          </tr>
+          <!---- Start four-column section --->
+          <tr>
+            <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="10">
+              <tr>
+                 <tr id="section-classroom-news">
+                   <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; padding-left:0px; color:#ccc; font-size:18px; padding-bottom:5px;"><i>Classroom News</i></td>
+                 </tr>
+               {% for post in object.blog_posts.all %}
+                  <tr >
+                    <td align="left" id="classroom-{{post.id}}" valign="middle" style="background:#70A76E; margin:1em 0 1em 0;padding:5px; width:20%;font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:white; font-size:16px; padding-bottom:5px;"><i>{{ post.categories.all.0|typogrify }}</i><span class="return"><a href="#contents">&uArr;</a></span></td>
+                  </tr>
+                  <tr >
+                    <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; font-size:22px; padding-bottom:5px;"><i>{{ post.title|typogrify }}</i><span class="return"><a href="#contents">&uArr;</a></span></td>
+                  </tr>
+		  <tr>
+                    <td width="143" align="left" valign="top"><table width="123" border="0" cellspacing="0" cellpadding="0">
+                        {% if post.image %}
+                        <div class="entry-image">
+                          <p>
+                            {% if continue_reading %}
+                            <a href="{{ post.get_absolute_url }}" title="{{ post.title }}" rel="bookmark">
+                              {% endif %}
+                              <img src="{% thumbnail post.image 800x300 crop %}" alt="{{ post.title }}" class="" />
+                              {% if continue_reading %}
+                            </a>
+                            {% endif %}
+                          </p>
+                        </div>
+                        {% endif %}
+                        {{post.content|safe}}
+                    </table></td>
+		  </r>
+                {% endfor %}
+          </tr>
+          
+          <tr >
+            <td align="center" valign="middle" style="padding-bottom:15px; padding-top:15px;"><img src="{{STATIC_URL}}img/newsletter/divider.gif" width="780" height="28"></td>
+          </tr>
+
+          {% endif %}
+          {% if object.lunch_menu %}
+          <tr id="lunch-menu">
+            <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; font-size:22px; padding-bottom:5px;"><i>Lunch menu for {{object.lunch_menu.start_date}}</i><span class="return"><a href="#contents">&uArr;</a></span></td>
+          </tr>
+          <tr>
+            <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; padding:20px; font-size:16px; line-height:1.4em;">
+            <div class="lunch_menu">
+                <dl class="monday" style="float:left; border:1px solid #ccc; padding:5px;  margin-right:5px; width:120px;" >
+                <dt style="font-color:#555; font-size:11pt; text-align:center; background:#ccc; margin-bottom:5px;">Monday</dt>
+                {% if object.lunch_menu.monday %}
+                    <dd style="margin-left:0; font-size:10pt; " >{{object.lunch_menu.monday}}</dd>
+                {% else %}
+                    <dd>No school</dd>
+                {% endif %}
+                </dl>
+            
+                <dl class="tuesday" style="float:left; border:1px solid #ccc; padding:5px;  margin-right:10px; width:130px;" >
+                <dt style="font-color:#555; font-size:11pt; text-align:center; background:#ccc; margin-bottom:5px;">Tuesday</dt>
+                {% if object.lunch_menu.tuesday %}
+                    <dd style="margin-left:0; font-size:10pt; " >{{object.lunch_menu.tuesday}}</dd>
+                {% else %}
+                    <dd>No school</dd>
+                {% endif %}
+                </dl>
+            
+                <dl class="wednesday" style="float:left; border:1px solid #ccc; padding:5px;  margin-right:10px; width:130px;" > 
+                <dt style="font-color:#555; font-size:11pt; text-align:center; background:#ccc; margin-bottom:5px;">Wednesday</dt>
+                {% if object.lunch_menu.wednesday %}
+                    <dd style="margin-left:0; font-size:10pt; " >{{object.lunch_menu.wednesday}}</dd>
+                {% else %}
+                    <dd>No school</dd>
+                {% endif %}
+                </dl>
+            
+                <dl class="thursday"  style="float:left; border:1px solid #ccc; padding:5px;  margin-right:10px; width:130px;" > 
+                <dt style="font-color:#555; font-size:11pt; text-align:center; background:#ccc; margin-bottom:5px;">Thursday</dt>
+                {% if object.lunch_menu.thursday %}
+                    <dd style="margin-left:0; font-size:10pt; " >{{object.lunch_menu.thursday}}</dd>
+                {% else %}
+                    <dd>No school</dd>
+                {% endif %}
+                </dl>
+            
+                <dl class="friday" style="float:left; border:1px solid #ccc; padding:5px;  margin-right:10px; width:130px; ">
+                <dt style="font-color:#555; font-size:11pt; text-align:center; background:#ccc; margin-bottom:5px;">Friday</dt>
+                {% if object.lunch_menu.friday%}
+                    <dd style="margin-left:0; font-size:10pt; " >{{object.lunch_menu.friday}}</dd>
+                {% else %}
+                    <dd>No school</dd>
+                {% endif %}
+            
+                </dl>
+              
+	    </td>
+          </tr>
+          {% endif %}
+          <!--- End section {{section.title}} --->
+          <tr>
+            <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; font-size:12px; color:#000000;">
+            <br />
+            <div style="color:#999; font-size:15px;"><b>Contact Us</b></div>
+             <div>
+               
+               
+             </div>
+              <div>
+                <!----
+                <table width="70" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="40" align="left" valign="middle"><img src="images/facebook.png" width="24" height="24"></td>
+                    <td width="40" align="left" valign="middle"><img src="images/tweet.png" width="24" height="24"></td>
+                  </tr>
+                </table>
+                -->
+              </div><div><br>
+                  P.O. Box 29,   <br>
+                  Castine, ME&nbsp;&nbsp;04421<br>
+                  tel. (207) 326  8608 <br>
+                  email info@adamsschool.com<br/>
+              <br>
+              <br>
+              </div></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table>
+    <br>
+    <br></td>
+  </tr>
+  <tr>
+    <td align="center" valign="top">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

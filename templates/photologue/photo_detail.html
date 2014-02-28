@@ -1,0 +1,25 @@
+{% extends "photologue/base.html" %}
+{% load humanize %}
+    
+
+{% load photologue_tags %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block photo-content %}
+    {% for gallery in object.public_galleries %}
+    <h4 class="right-ribbon title">{{ gallery.title }}</h4>
+    <p class="left-back"><a class="button" href="{% url pl-gallery-archive %}">Back to galleries</a></p>
+    <div class="clear"></div>
+<div class="gallery-photo-detail">
+    <p class="prev">{% previous_in_gallery object gallery %}<br />Previous</p>
+    <p class="next">{% next_in_gallery object gallery %}<br />Next</p>
+    {% if forloop.first %}
+    <p class="photo"><a href="{{ object.image.url }}"><img src="{{ object.get_display_url }}" alt="{{ object.title }}"/></a>
+    {% if object.caption %}<p>{{ object.caption }}</p>{% endif %}</p>
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+{% endblock %}

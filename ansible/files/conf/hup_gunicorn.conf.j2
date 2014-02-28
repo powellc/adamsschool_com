@@ -1,0 +1,8 @@
+[program:hup_gunicorn]
+command = /var/www/vhosts/{{ project_name }}/venv/bin/python /usr/local/bin/hup_gunicorn.py -a foi_org /var/www/vhosts/{{project_name}}/code/
+directory = /var/www/vhosts/{{ project_name }}/code
+user = {{ project_name }} 
+autostart = true
+autorestart = true
+stdout_logfile = /var/www/vhosts/{{ project_name }}/logs/hup.log
+redirect_stderr = true

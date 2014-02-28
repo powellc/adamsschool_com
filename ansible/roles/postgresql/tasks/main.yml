@@ -1,0 +1,30 @@
+---
+- name: Install PostgreSQL with locale set
+  shell: LANG=${locale} LC_COLLATE=${locale} LC_CTYPE=${locale} LC_MESSAGES=${locale} LC_MONETARY=${locale} LC_NUMERIC=${locale} LC_TIME=${locale} LC_ALL=${locale}  apt-get install -y postgresql
+
+- name: Install PostgreSQL Dev Tools
+  apt: pkg=${item} state=installed update-cache=yes
+  with_items:
+    - postgresql-server-dev-all
+    - python-psycopg2
+
+- name: Install PostgreSQL GIS tools
+  apt: pkg=postgis state=installed update-cache=yes
+  when: postgis == True
+
+- name: Change access permissions for PostgreSQL
+  copy: src=pg_hba.conf dest=/etc/postgresql/9.1/main/pg_hba.conf
+  sudo_user: postgres
+  register: pg_file
+
+- name: Reload PostgreSQL if it changed
+  service: name=postgresql state=reloaded enabled=yes
+  when: pg_file.changed
+
+- name: Create the database.
+  postgresql_db: db=${dbname} 
+  sudo_user: postgres
+
+- name: Create database user.
+  postgresql_user: db=${dbname} user=${dbuser} password=${dbpassword} state=present priv=ALL role_attr_flags=SUPERUSER
+  sudo_user: postgres

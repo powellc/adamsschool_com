@@ -1,0 +1,62 @@
+---
+# Adams School
+- hosts: vagrant
+  user: vagrant
+  sudo: True
+  roles:
+    - role: vagrant
+
+- hosts: vagrant
+  gather_facts: True
+  user: ubuntu
+  sudo: True
+  vars:
+    domain_name: adamsschool.com
+    mode: local
+    branch: staging
+    hostname: aes-local
+    app_name: "PKS: Parkside Church"
+    repo_name: adamsschool_com
+    deployment_name: aes_local
+    project_root: /var/www/vhosts/aes_local
+    project_repo: git@bitbucket.com:powellc/adamsschool_com.git
+
+    # DB related config
+    dbname: aes 
+    dbuser: aes
+    dbpassword: zxijl3k*l290.(23j
+    dbdump_file: aes_production-nightly.sql
+    locale: en_US.UTF-8
+    timezone: America/New_York
+
+    # Special vars to handle different django deploys
+    collectstatic: True
+    postgis: False
+    code_root: /
+    project_path: /
+    settings_path: settings
+    etc_path: /etc
+
+    system_packages:
+      - git
+      - memcached
+      - build-essential
+      - libxml2-dev
+      - libxslt1-dev
+      - libjpeg-dev
+      - libfreetype6-dev
+      - python-dev
+      - python-pip
+      - python-virtualenv
+      - python-pyinotify
+      - postfix
+  roles:
+    - role: common
+    - role: postgresql
+    - role: nginx
+    - role: django
+
+  tasks:
+    - include: roles/vagrant/tasks/setup.yml
+    - include: roles/django/tasks/deploy.yml
+    - include: roles/vagrant/tasks/pg_sync.yml

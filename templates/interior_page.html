@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        {% show_breadcrumb %}
+    </ul>
+{% endblock breadcrumbs %}
+
+{% block extra_js %}
+<script>
+$("#side-menu > li > div").click(function(){
+   
+       if(false == $(this).next().is(':visible')) {
+                 $('#accordion ul').slideUp(300);
+                     }
+                         $(this).next().slideToggle(300);
+});
+ 
+ $('#side-menu ul:eq(0)').show();
+ </script>
+ {% endblock %}
+
+{% block main_content %}
+    <h2>{{ request.current_page.get_title }}</h2>
+    {% placeholder "content" %}
+{% endblock main_content %}
+
+{% block submenu %}
+    <div class="row">
+        <div class="span12">
+            <ul class="submenu">
+                {% show_menu 1 100 0 1 %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    <ul class="">
+    {% show_sub_menu 1 %}
+    </ul>
+{% placeholder 'sidebar' %}
+{% endblock sidebar %}
+

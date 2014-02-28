@@ -1,0 +1,16 @@
+---
+- name: restart nginx
+  service: name=nginx state=restarted
+  sudo_user: root
+
+- name: restart postgresql
+  service: name=postgresql state=reloaded
+  sudo_user: root
+
+- name: restart supervisor
+  service: name=supervisor state=restarted
+  sudo_user: root
+
+- name: reload supervisor 
+  supervisorctl: name=${project_name} state=restarted
+  sudo_user: root

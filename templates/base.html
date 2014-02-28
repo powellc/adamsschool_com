@@ -1,0 +1,100 @@
+{% load cms_tags menu_tags sekizai_tags wunderground_tags %}
+<!doctype html>
+
+<html>
+
+	<head>
+        <title>{% block title %}{% endblock %} Adams School</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="language" content="en-US" />
+        <meta name="keywords" content="adams school elementary middle grade castine maine education k-12 {% block meta-keywords %}{% endblock %}" />
+        <meta name="description" content="{% block meta-description %}{% endblock %}" />
+        {% block meta %}{% endblock %}
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+        {% render_block "css" %}
+        <link rel="stylesheet/css" media="all" href="{{STATIC_URL}}css/slidorion.css"/>
+        <link rel="stylesheet" media="all" href="{{STATIC_URL}}css/bootstrap.min.css"/>
+        <link rel="stylesheet" media="all" href="{{STATIC_URL}}css/slidorion.css"/>
+        <link rel="stylesheet" media="print" href="{{STATIC_URL}}css/print.css"/>
+        <link rel="stylesheet/less" type="text/css" media="all" href="{{STATIC_URL}}css/main.less"/>
+        {% block extra_css %}{% endblock %}
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href='http://fonts.googleapis.com/css?family=Francois+One|Varela+Round' rel='stylesheet' media="screen,print" type='text/css'>
+		<!-- Adding "maximum-scale=1" fixes the Mobile Safari auto-zoom bug: http://filamentgroup.com/examples/iosScaleBug/ -->
+        <link rel="icon" href="{{STATIC_URL}}img/favicon.ico" type="image/x-icon" />
+	    <script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+
+  <body lang="en" class="{% block body-class %}hm{% endblock %}" {% block js-load %}{% endblock %}>
+    <div class="container">
+      <div class="content">
+      {% cms_toolbar %}
+
+        <div class="page-header ">
+            {% if top_notification %}
+            <div class="row">
+                <div class="top_notification{% if hide_top_notification %} hide{% endif %}" data-timestamp="{{ top_notification.shown_since_as_timestamp }}">
+                    <p>{{ top_notification.text }}{% if top_notification.link %}&nbsp;<a href="{{ top_notification.link }}">Read more &raquo;</a>{% endif %}</p>
+                <a href="#" class="dismiss">×</a>
+                </div>
+            </div>
+            {% endif %}
+          <div class="row">
+            {% current_weather '04421' %}
+            <div class="span6">
+              <a href="/"><h1>Adams School</h1></a>
+            </div>
+            <div class="span4 teaser">
+              <a href="{{ SITE_URL }}/newsletter/"><img src="{{ STATIC_URL }}img/lighthouse-teaser.png" width=292 height=84 ></a>
+              <a style="float:right; padding-top:5px; padding-right:15px; " href="{{SITE_URL}}/newsletter/">View the latest issue &raquo;</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="menu span15">
+              <ul class="">
+                {% show_menu 0 0 0 0 "menu/main_nav_menu.html" %}
+              </ul>
+            </div>
+          </div>
+          {% block submenu %}
+          {% endblock %}
+          <div id="top-content" class="row">
+            {% block top_content %} {% endblock %}
+          </div>
+        </div>
+
+
+        <div id="main-content" class="row">
+          {% block content %}
+          <div class="span8 content " id="{{request.current_page}}">
+          {% block main_content %}{% endblock %}
+          </div>
+
+          <div class="span3 sidebar">
+          {% block sidebar %}{% endblock %}
+          </div>
+          {% endblock %}
+        </div>
+      </div>
+
+      <div id="footer">
+        	<p class="mission"><a href="">Safety&nbsp;&bull;&nbsp;Respect&nbsp;&bull;&nbsp;Responsibility&nbsp;&bull;&nbsp;Trust</a></p>
+	        <p>&copy; {% now "Y" %} Adams School &bull; PO Box 29, Castine, Maine &bull; Phone 207 326 8608 &bull; Fax 207 326 0665 | 
+      </div>
+    </div>
+  </div>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.cycle.all.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.slidorion.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/notifications.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/less.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/application.js"></script>
+    {% render_block "js" %}
+    {% block extra_js %}{% endblock %}
+</body>
+	
+</html>
+  
+

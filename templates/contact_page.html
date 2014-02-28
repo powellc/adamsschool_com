@@ -1,0 +1,21 @@
+{% extends "interior_page.html" %}
+{% load cms_tags sekizai_tags menu_tags %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        {% show_breadcrumb %}
+    </ul>
+{% endblock breadcrumbs %}
+
+
+{% block sidebar %}
+<ul>
+    {% show_menu 1 100 0 1 %}
+</ul>                
+{% endblock sidebar %}
+
+
+{% block content %}
+    <h2>{{ request.current_page.get_title }}</h2>
+    {% placeholder "content" %}
+{% endblock content %}

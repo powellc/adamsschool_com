@@ -1,0 +1,14 @@
+{% extends 'flatpages/base.html' %}
+{% load typogrify_tags markup %}
+
+{% block title %}{{flatpage.title}}{% endblock %}
+
+{% block flatpage-content %}
+    <div class="left-content">
+        <h3>{{flatpage.title}}</h3>
+        {{flatpage.content|urlize|markdown|typogrify}}
+    </div>
+
+    <div class="clear"></div>
+
+{% endblock %}

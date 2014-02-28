@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block content %}
+    <div id="main-content">
+        <h3>Our classrooms</h3>
+        <p>At Adams School, all of our grades are combined, a feature that allows teachers to develop relationships with students over two years, and for younger students to see behavior modeled by their older classmates.</p>
+
+{{object_list}}
+      <div id="center-content">
+        {% for class in classroom_list %}
+        <dl class="classroom">
+          <dt>{{class.title}}</span></dt>
+          <dd><img src="{% thumbnail class.photo 320x240 crop %}" width=320 /></dd>
+          <dd>{{class.description}}</dd>
+        </dl>
+        {% endfor %}
+
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% load i18n mptt_tags typogrify_tags %}
+<ul class="category-root">
+  {% recursetree categories %}
+  <li>
+    <a href="{{ node.get_absolute_url }}" title="{% blocktrans with category=node %}Show all entries in {{ category }}{% endblocktrans %}">{{ node|typogrify }}</a>
+    {% if not node.is_leaf_node %}
+    <ul class="category-children category-{{ node.slug }}">
+      {{ children }}
+    </ul>
+    {% endif %}
+  </li>
+  {% endrecursetree %}
+  {% if not categories %}
+  <li>
+    {% trans "No categories yet." %}
+  </li>
+  {% endif %}
+</ul>

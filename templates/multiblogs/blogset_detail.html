@@ -1,0 +1,24 @@
+{% extends 'multiblogs/base.html' %}
+{% load thumbnail %}
+
+{% block title %}{{object.title}}{%endblock %}
+
+{% block content %}
+<div id="main-content">
+    <h3>Blogs</h3>
+    {% block menu %}{% endblock %}
+  <h4 class="right-ribbon title">{{object.title}}</h4>
+  <div class="clear"></div>
+  <p class="back"><a href="{% url mb-blog-set-list %}">Back to blogs</a></p>
+  {% for blog in object.get_blogs %}
+
+  <dl id="blog-{{blog.slug}}" class="blog">
+    <dt><a href="{{blog.get_absolute_url}}" alt="Read {{blog}}">{{blog.title}}</dt>
+        <dd>{% for a in blog.authors.all %}{% if forloop.first %}{% if a.get_profile.mug %}<img src="{% thumbnail a.get_profile.mug 170x0 %}" alt="Photo of {{a}}" />{% endif %}{% endif %}{% endfor %}</a></dd>
+    <dd>by {{blog.get_authors}}</dd>
+  </dl>
+  {% endfor %}
+
+  <div class="clear"></div>
+</div>
+{% endblock %}

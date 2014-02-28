@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}Teachers | {{ block.super }}{% endblock %}
+
+{% block meta-keywords %}teachers staff{% endblock %}
+
+{% block main_content %}
+    <div id="main-content">
+      <h3>Our teachers</h3>
+      {% placeholder "content" %}
+
+      <div id="center-content">
+        <div id="staff-list">
+        {% for staff in teacher_list %}
+        <dl class="staff">
+          <dt><a href="{{staff.get_absolute_url}}" alt="{{staff}}">{{staff.title}} {{staff.last_name}}</a></dt>
+          {% if staff.mug %}<dd class="mug"><img src="{% thumbnail staff.mug '150x150' %}" /></dd>{% endif %}
+          <dd>{% for pos in staff.positions.all %}{{pos}}{% if not forloop.last %}<br /> {%endif%}{%endfor %}
+        </dl>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+

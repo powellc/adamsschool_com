@@ -1,0 +1,8 @@
+[program:{{ project_name }}]
+command = /var/www/vhosts/{{ project_name }}/venv/bin/gunicorn_django -c /etc/{{ project_name }}_gunicorn.py 
+directory = /var/www/vhosts/{{ project_name }}/code
+user = {{ project_name }} 
+autostart = true
+autorestart = true
+stdout_logfile = /var/www/vhosts/{{ project_name }}/logs/supervisord.log
+redirect_stderr = true

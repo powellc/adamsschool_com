@@ -1,0 +1,52 @@
+{% extends "zinnia/skeleton.html" %}
+{% load zinnia_tags i18n %}
+{% load url from future %}
+
+{% block meta %}
+    {{block.super}}
+    <link rel="stylesheet" media="all" href="{{STATIC_URL}}css/blog.css"/>
+    <meta name="generator" content="Zinnia {{ ZINNIA_VERSION }}" />
+    <link rel="index" href="{% url 'zinnia_entry_archive_index' %}" />
+    <link rel="author" type="text/plain" href="{% url 'zinnia_humans' %}" />
+    <link rel="EditURI" type="application/rsd+xml" href="{% url 'zinnia_rsd' %}" />
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="{% url 'zinnia_wlwmanifest' %}" />
+    <link rel="search" type="application/opensearchdescription+xml" title="Adams School Blog" href="{% url 'zinnia_opensearch' %}" />
+    <link rel="alternate" type="application/rss+xml" title="{% trans "RSS Feed of latest entries" %}" href="{% url 'zinnia_entry_latest_feed' %}" />
+    <link rel="alternate" type="application/rss+xml" title="{% trans "RSS Feed of latest discussions" %}" href="{% url 'zinnia_discussion_latest_feed' %}" />
+    {% get_archives_entries "zinnia/tags/archives_entries_link.html" %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% zinnia_breadcrumbs %}
+{% endblock %}
+
+{% block sidebar %}
+<div id="widget-search" class="widget">
+  <h4>{% trans "Search" %}</h3>
+  {% include "zinnia/tags/search_form.html" %}
+</div>
+<div id="widget-groups" class="widget">
+  <h4>{% trans "Blogs" %}</h3>
+  {% get_categories %}
+</div>
+<div id="widget-subscribe" class="widget">
+  <h4>{% trans "Subscribe" %}</h3>
+  <p><a href="{% url 'zinnia_entry_latest_feed' %}" title="{% trans "RSS Feed of latest entries" %}" class="feeds">{% trans "RSS Feed" %}</a></p>
+</div>
+<div id="widget-tags" class="widget">
+  <h4>{% trans "Tags" %}</h3>
+  {% get_tag_cloud %}
+</div>
+<div id="widget-recents" class="widget">
+  <h4>{% trans "Recent entries" %}</h3>
+  {% get_recent_entries %}
+</div>
+<div id="widget-populars" class="widget">
+  <h4>{% trans "Popular entries" %}</h3>
+  {% get_popular_entries %}
+</div>
+<div id="widget-archives" class="widget">
+  <h4>{% trans "Archives" %}</h3>
+  {% get_archives_entries_tree %}
+</div>
+{% endblock %}

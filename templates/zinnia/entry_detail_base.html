@@ -1,0 +1,91 @@
+{% extends "zinnia/base.html" %}
+{% load i18n zinnia_tags %}
+{% load url from future %}
+
+{% block title %}{{ object.title }} | {{ block.super }}{% endblock %}
+
+{% block meta-description %}{% if object.excerpt %}{{ object.excerpt|striptags }}{% else %}{{ object.content|striptags|truncatewords:100 }}{% endif %}{% endblock %}
+
+{% block meta-keywords %}{% if object.tags %}{{ object.tags }}{% else %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block meta %}
+  {{ block.super }}
+  {% with previous_entry=object.previous_entry %}{% if previous_entry %}
+  <link rel="prev" title="{{ previous_entry.title }}" href="{{ previous_entry.get_absolute_url }}" />
+  {% endif %}{% endwith %}
+  {% with next_entry=object.next_entry %}{% if next_entry %}
+  <link rel="next" title="{{ next_entry.title }}" href="{{ next_entry.get_absolute_url }}" />
+  {% endif %}{% endwith %}
+  <link rel="shortlink" href="{{ object.short_url }}" />
+  <link rel="canonical" href="{{ object.get_absolute_url }}" />
+  {% with year=object.creation_date|date:"Y" month=object.creation_date|date:"m" day=object.creation_date|date:"d" %}
+  {% endwith %}
+{% endblock %}
+
+{% block body-class %}entry entry-{{ object.pk }}{% if object.featured %} featured{% endif %}{% endblock %}
+
+{% block blog_content %}
+
+{% block entry-content %}
+  {% with object_content=object.html_content|safe %}
+  {% include "zinnia/_entry_detail.html" %}
+  {% endwith %}
+{% endblock %}
+
+{% block entry-widgets %}
+<div class="entry-widgets">
+  {% with next_entry=object.next_entry %}
+  {% if next_entry %}
+  <div class="entry-next">
+    <h5>{% trans "Next entry" %}</h5>
+    <p>
+      <a href="{{ next_entry.get_absolute_url }}" title="{{ next_entry.title }}" rel="next">
+        {{ next_entry.title }}
+      </a>
+    </p>
+  </div>
+  {% endif %}
+  {% endwith %}
+  {% with previous_entry=object.previous_entry %}
+  {% if previous_entry %}
+  <div class="entry-previous">
+    <h5>{% trans "Previous entry" %}</h5>
+    <p>
+      <a href="{{ previous_entry.get_absolute_url }}" title="{{ previous_entry.title }}" rel="prev">
+        {{ previous_entry.title }}
+      </a>
+    </p>
+  </div>
+  {% endif %}
+  {% endwith %}
+  {% if object.related_published %}
+  <div class="entry-related">
+    <h4>{% trans "Related entries" %}</h4>
+    <ul>
+      {% for entry in object.related_published %}
+      <li>
+	<a href="{{ entry.get_absolute_url }}" title="{{ entry.title }}" rel="bookmark">{{ entry.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  <div class="entry-similar">
+    <h3>{% trans "Similar entries" %}</h3>
+    {% get_similar_entries %}
+  </div>
+</div>
+{% endblock %}
+
+
+{% endblock %}
+
+{% block admin_tools %}
+{% if perms.zinnia.change_entry %}
+<li>
+  <a href="{% url 'admin:zinnia_entry_change' object.pk %}" title="{% trans "Edit the entry" %}">
+    {% trans "Edit the entry" %}
+  </a>
+</li>
+{% endif %}
+{% endblock %}

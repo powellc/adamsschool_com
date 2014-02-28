@@ -1,0 +1,21 @@
+{% extends "photologue/base.html" %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block photo-content %}
+
+<h4 class="right-ribbon title">{{ object.title }}</h4>
+<div class="clear"></div>
+<p class="back"><a href="{% url pl-gallery-archive %}">Back to galleries</a></p>
+<h5>Originally published {{ object.date_added|date:"l, F jS, Y" }}</h5>
+{% if object.description %}<p>{{ object.description }}</p>{% endif %}
+<div class="photo-gallery">
+    {% for photo in object.public %}
+    <div class="gallery-photo">
+        <a href="{{ photo.get_absolute_url }}"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a>
+    </div>
+    {% endfor %}
+</div>
+<div class="clear"></div>
+
+{% endblock %}

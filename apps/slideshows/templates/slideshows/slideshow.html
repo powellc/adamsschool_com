@@ -1,0 +1,43 @@
+
+{% if slideshow %}
+<div class="visual-block">
+	<ul>
+		{% for slide in slideshow.live_slides %}
+		<li>
+		    {% if slide.link_text %}
+		  <a href="{{ slide.target_url }}">
+			<img width="950" height="263" src="{{ slide.photo.url }}" alt="{{ slide.title }}" />
+			<div class="text-box slide-text brown-slide">
+				<strong class="title">{{ slide.title }}</strong>
+				<p>{{ slide.description }}</p>
+				<div class="btn-holder">
+					<span>{{ slide.link_text }}</span>
+				</div>
+			</div>
+			</a>
+			{% else %}
+            <a href="{{ slide.target_url }}">
+            <img width="950" height="263" src="{{ slide.photo.url }}" alt="{{ slide.title }}" />
+			<div class="text-box slide-text brown-slide">
+				<strong class="title">{{ slide.title }}</strong>
+				<p>{{ slide.description }}</p>
+			</div>
+			</a>
+			{% endif %}
+		</li>
+		{% endfor %}
+		
+	</ul>
+</div>
+<div class="slide-menu-wrap">
+<ul class="slide-menu">
+	{% for slide in slideshow.live_slides %}
+	<li class="active">
+		<a href="#">{{ slide.button_text }}</a>
+		<span class="arrow">&nbsp;</span>
+	</li>
+	{% endfor %}
+
+</ul>
+</div>
+{% endif %}

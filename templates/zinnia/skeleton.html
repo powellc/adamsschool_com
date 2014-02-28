@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load zinnia_tags i18n %}
+{% load url from future %}
+{% get_tags as entry_tags %}
+
+    {% block meta %}
+    <link rel="pingback" href="/xmlrpc/" />
+    <link rel="shortcut icon" href="{{ STATIC_URL }}zinnia/img/favicon.ico" />
+    <link rel="home" href="{% url 'zinnia_entry_archive_index' %}" />
+    {% endblock %}
+
+    {% block main_content %}
+      <div class="span11">
+        <div class="row">
+          <div class="span7">
+            <h2>Adams School News</h2>
+            <div id="content" class="hfeed">
+              {% block blog_content %}{% endblock %}
+            </div>
+          </div>
+          <div id="sidebar" class="span6">
+          </div>
+        </div>
+      </div>
+  {% endblock main_content %}

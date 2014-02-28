@@ -1,0 +1,11 @@
+[django:bbh]
+162.243.100.6 nickname=production vm=0 branch=master sys_user=root subdomain=www
+
+[django:ndcm]
+162.243.100.6 nickname=staging vm=0 branch=master sys_user=root subdomain=staging
+
+[pks_staging]
+192.241.156.204 nickname=staging branch=staging sys_user=root subdomain=staging
+
+[hubot]
+192.241.147.241

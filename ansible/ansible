@@ -1,0 +1,5 @@
+#!/bin/bash
+# Run with:
+# ./ansible production provision.yml
+/usr/bin/env ansible-playbook -i hosts -K --limit "$@" --verbose
+

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block body-class %}pl{% endblock %}
+
+{% block content %}
+<div id="main-content">
+  <h3>Photos</h3>
+
+  <div id="left-content">
+    {% block photo-content %}{% endblock %}
+  </div>
+
+  <div class="clear"></div>
+
+</div>
+    
+{% endblock %}

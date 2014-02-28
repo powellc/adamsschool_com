@@ -1,0 +1,31 @@
+---
+app_name: "AS: Adams School"
+project_name: adamsschool_com
+project_root: /var/www/vhosts/adamsschool_com
+project_repo: git@bitbucket.org:powellc/adamsschool_com
+domain_name: adamsschool.com
+dbname: adams 
+dbuser: adams
+dbpassword: 823lkjsdf90(#lsjvla0 
+dbdump_file: aes_production-nightly.sql
+system_packages:
+  - vim
+  - memcached
+  - build-essential
+  - git
+  - libevent-dev
+  - libxml2-dev
+  - libxslt1-dev
+  - libjpeg-dev
+  - nginx
+  - supervisor
+  - postgresql
+  - python-psycopg2
+  - postgresql-server-dev-all
+  - python-dev
+  - python-setuptools
+  - python-pyinotify
+  - postfix
+python_packages:
+  - pip
+  - virtualenv

@@ -1,0 +1,23 @@
+{% extends 'multiblogs/base.html' %}
+{% load thumbnail %}
+
+{% block title %}Blogs {% endblock %}
+
+{% block content %}
+<div class="row" id="main-content">
+    <h3>Blogs</h3>
+  <br/>
+  {% for blogset in object_list.all %}
+  <h4 class="right-ribbon title">{{blogset.title}}</h4>
+  <div class="clear"></div>
+  {% for blog in blogset.get_blogs %}
+
+  <dl id="blog-{{blog.slug}}" class="blog">
+    <dt><a href="{{blog.get_absolute_url}}" alt="Read {{blog}}">{{blog.title}}</dt>
+        <dd>{% for a in blog.authors.all %}{% if forloop.first %}{% if a.get_profile.mug %}<img src="{% thumbnail a.get_profile.mug 170x0 %}" alt="Photo of {{a}}" />{% endif %}{% endif %}{% endfor %}</a></dd>
+    <dd>by {{blog.get_authors}}</dd>
+  </dl>
+  {% endfor %}
+  {% endfor %}
+</div>
+{% endblock %}

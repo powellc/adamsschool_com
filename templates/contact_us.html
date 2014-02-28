@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags %}
+{% block title %}Contact Us | {{ block.super }}{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        {% show_breadcrumb %}
+    </ul>
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+          <div class="span6 content " id="{{request.current_page}}">
+             <h2>{{ request.current_page.get_title }}</h2>
+             {% placeholder "teachers" %}
+          </div>
+
+          <div class="span5 sidebar">
+            <div id="hcard-adams-school" class="vcard">
+              <div class="org">Adams School</div>
+              <div><a class="url fn" href="/teachers/katie-frothingham/">Katie Frothingham, Principal</a></div>
+              <div><a class="email" href="mailto:info@adamsschool.com">info@adamsschool.com</a></div>
+              <div class="adr">
+                <div class="mailing-address">P.O. Box 29</div>
+                <div class="street-address">27 School Street</div>
+                <span class="locality">Castine</span>,
+                <span class="region">ME</span> <span class="postal-code">04421</span>
+              </div>
+              <div id="tel">Tel: <span class="tel">207-326-8608</span></div>
+              <div id="fax">Fax: <span class="fax">207-326-0665</span></div>
+              <div class="map" id="map" style="width:380px; height:200px;">
+                   <iframe width="350" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?oe=utf-8&amp;client=firefox-beta&amp;channel=fflb&amp;ie=UTF8&amp;iwloc=&amp;q=adams+school+castine&amp;fb=1&amp;gl=us&amp;hq=adams+school&amp;hnear=0x4cae63a0e699babb:0x6235a4a23b963e1e,Castine,+ME&amp;cid=0,0,56604687738324303&amp;t=h&amp;ll=44.39046,-68.798988&amp;spn=0.000767,0.002033&amp;z=18&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?oe=utf-8&amp;client=firefox-beta&amp;channel=fflb&amp;ie=UTF8&amp;q=adams+school+castine&amp;fb=1&amp;gl=us&amp;hq=adams+school&amp;hnear=0x4cae63a0e699babb:0x6235a4a23b963e1e,Castine,+ME&amp;cid=0,0,56604687738324303&amp;t=h&amp;ll=44.39046,-68.798988<iframe width="380" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?oe=utf-8&amp;client=firefox-beta&amp;channel=fflb&amp;ie=UTF8&amp;q=adams+school+castine&amp;fb=1&amp;gl=us&amp;hq=adams+school&amp;hnear=0x4cae63a0e699babb:0x6235a4a23b963e1e,Castine,+ME&amp;cid=0,0,56604687738324303&amp;t=h&amp;ll=44.39046,-68.798988&amp;spn=0.000767,0.002033&amp;z=18&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?oe=utf-8&amp;client=firefox-beta&amp;channel=fflb&amp;ie=UTF8&amp;q=adams+school+castine&amp;fb=1&amp;gl=us&amp;hq=adams+school&amp;hnear=0x4cae63a0e699babb:0x6235a4a23b963e1e,Castine,+ME&amp;cid=0,0,56604687738324303&amp;t=h&amp;ll=44.39046,-68.798988&amp;spn=0.000767,0.002033&amp;z=18&amp;source=embed" style="color:#0000FF;text-align:left">View Larger Map</a></small>&amp;spn=0.000767,0.002033&amp;z=18&amp;source=embed" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+              </div>
+            </div>
+            <div id="hcard-school-union-93" class="vcard">
+              <div class="org">School Union 93</div>
+              <div><a class="url fn" href="http://www.schoolunion93.org/administration/superintendent">Mark Hurvitt, Superintendent</a></div>
+              <div><a class="email" href="mailto:mhurvitt@schoolunion93.org">mhurvitt@schoolunion93.org</a></div>
+              <div class="adr">
+                <div class="mailing-address">P.O. Box 630</div>
+                <div class="street-address">20 Hinckley Ridge Road</div>
+                <span class="locality">Blue Hill</span>,
+                <span class="region">Maine</span> <span class="postal-code">04614-0630</span>
+              </div>
+              <div id="tel">Tel: <span class="tel">207-374-9927</span></div>
+              <div id="fax">Fax: <span class="tel">207-374-2951</span></div>
+            </div>
+            <img src="http://www.adamsschool.com/media/classroom/school/adams-school.jpg.398x0_q85.jpg" alt="The Adams School building" />
+          </div>
+{% endblock content %}
+

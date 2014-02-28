@@ -1,0 +1,44 @@
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+ADMINS = (
+    ('Five Q', 'parksidechurch_com@fiveq.com'),
+)
+MANAGERS = ADMINS
+FILER_DEBUG=False
+ROOT_URLCONF = 'urls'
+
+if DEBUG:
+    INTERNAL_IPS = ('127.0.0.1')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '{{ dbname }}',
+	'USER': '{{ dbuser }}',
+	'PASSWORD': '{{ dbpassword }}',
+	'HOST': '127.0.0.1'
+    }
+}
+
+def custom_show_toolbar(request):
+    return True  # Always show toolbar, for example purposes only.
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    'SHOW_TOOLBAR_CALLBACK': custom_show_toolbar,
+    'HIDE_DJANGO_SQL': False,
+    'TAG': 'div',
+    'ENABLE_STACKTRACES' : True,
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        #'LOCATION': '127.0.0.1:11211', # for memcache
+    }
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SSL = False
+

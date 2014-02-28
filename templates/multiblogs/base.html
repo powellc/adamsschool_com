@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block body-class %}mb{% endblock %}
+
+{% block content %}
+<div class="row" id="main-content">
+    <h3>Blogs</h3>
+    {% block menu %}{% endblock %}
+
+  <div class="span8" id="blog-content">
+    {% block blog-content %}{% endblock %}
+  </div>
+
+  <div class="span5" id="idebar-content">
+      {% block sidebar-content %}{% endblock %}
+  </div>
+
+  <div class="clear"></div>
+
+  <div id="page-footer">
+      {% block page-footer-content %}{% endblock %}
+  </div>
+
+</div>
+    
+{% endblock %}
