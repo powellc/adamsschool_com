@@ -8,6 +8,11 @@ Build and deploy the website for the Adams School in Castine, Maine!
 
 http://www.adamsschool.com
 
+A long term goal of this project would be to provide a simple Django
+website setup for small schools. This would include some basic
+templates, helpful apps, and django-cms for arbitrary page creation
+and menu building.
+
 Install
 --------
 
@@ -30,3 +35,5 @@ all the requisite tools installed.
 
 1. ./install
 2. ./run
+
+
