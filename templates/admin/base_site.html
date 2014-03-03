@@ -1,6 +1,13 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 
+{% block extrastyle %}
+<style>
+    #header { background:#ccc; }
+</style>
+
+{% endblock %}
+
 {% block branding %}
-<h1>Adams School Admin</h1>
+<h1><img src="/static/img/adams-school-small-logo.jpg"></h1>
 {% endblock %}
