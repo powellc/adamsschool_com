@@ -9,6 +9,7 @@ import re
 
 env.deploy_user = "aes_local"
 env.home_dir = "/var/www/vhosts/" + env.deploy_user + "/"
+env.repo_name = 'adamsschool_com'
 env.houston_version = 'v1.0.2'
 
 env.git_repo = "git@bitbucket.org:powellc/adamsschool_com.git"
@@ -41,6 +42,22 @@ def start():
     local('node ansible/proxy.js &')
     local('vagrant up')
 
+def stage():
+    """Our Production Server"""
+    env.user = 'powellc'
+    env.hosts = ['staging.adamsschool.com']
+
+    env.deploy_user = "aes_staging"
+    env.home_dir = "/var/www/vhosts/" + env.deploy_user + "/"
+
+def prod():
+    """Our production settings"""
+    env.user = 'powellc'
+    env.hosts = ['adamsschool.com']
+
+    env.deploy_user = 'aes_production'
+    env.home_dir = "/var/www/vhosts/" + env.deploy_user + "/"
+
 def v():
     """Use Vagrant for testing"""
     env.user = 'vagrant'
@@ -51,7 +68,7 @@ def v():
     env.key_filename = re.sub(r'^"|"$', '', result.split()[1])  # parse IdentityFile
 
 def ve(command):
-    with cd(env.home_dir + 'code/'):
+    with cd(env.home_dir + env.repo_name):
         sudo("source %svenv/bin/activate" % env.home_dir + " && " + command, user=env.deploy_user)
 
 def collect():
@@ -98,3 +115,44 @@ def test(apps=''):
 def free():
     """Check free memory."""
     run('free -m')
+
+def pull(branch=None):
+    with cd(env.home_dir + env.repo_name + '/'):
+        sudo("git pull", user=env.deploy_user)
+        if branch:
+            sudo("git checkout {0}".format(branch), user=env.deploy_user)
+
+def syncdb():
+    """
+    Run syncdb.
+    """
+    ve('python manage.py syncdb --noinput')
+
+def migrate():
+    """
+    Migrate the db.
+    """
+    ve('python manage.py migrate')
+
+def validate():
+    """
+    Run validation, just a gut check
+    """
+    ve('python manage.py validate')
+
+
+def deploy(branch=None):
+    """Deploy changes to production or staging. Does four things:
+     1. pulls new code from branch specified in fabfile config
+     2. install reqs
+     3. migrate
+     4. collectstatic
+     5. validate
+     6. restart gunicorn/supervisor task
+    """
+    pull(branch)
+    collect()
+    syncdb()
+    migrate()
+    validate()
+    hup()
