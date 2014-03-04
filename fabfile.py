@@ -153,6 +153,6 @@ def deploy(branch=None):
     pull(branch)
     collect()
     syncdb()
-    migrate()
+    #migrate()
     validate()
     hup()
