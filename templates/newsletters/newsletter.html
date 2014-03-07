@@ -224,7 +224,7 @@ h1.p1, h2.p1, h3.p1 { padding-top:10px; font-size:12pt; }
           {% endif %}
           {% if object.lunch_menu %}
           <tr id="lunch-menu">
-            <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; font-size:22px; padding-bottom:5px;"><i>Lunch menu for {{object.lunch_menu.start_date}}</i><span class="return"><a href="#contents">&uArr;</a></span></td>
+            <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; font-size:22px; padding-bottom:5px;"><i>Lunch menu for  the week of {{object.lunch_menu.start_date|date:"F j"}}</i><span class="return"><a href="#contents">&uArr;</a></span></td>
           </tr>
           <tr>
             <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; padding:20px; font-size:16px; line-height:1.4em;">
