@@ -21,3 +21,4 @@ venv
 .tox
 *.sql
 *.bz2
+.DS_Store
