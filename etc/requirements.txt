@@ -64,5 +64,6 @@ wsgiref==0.1.2
 z3c.setuptools-mercurial==1.1.1
 django-wunderground==1.0.0
 django-jenkins==0.14.1
+django-allauth
 
 raven==3.4.1
