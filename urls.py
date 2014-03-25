@@ -7,11 +7,13 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    #(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    (r'^accounts/', include('allauth.urls')),
     url(r'^admintools/', include('admin_tools.urls')),
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'cmspages': CMSSitemap}}),
+    url(r'^sitemap.xml$',
+        'django.contrib.sitemaps.views.sitemap',
+        {'sitemaps': {'cmspages': CMSSitemap}}),
     (r'^photos/', include('photologue.urls')),
     (r'^tinymce/', include('tinymce.urls')),
     (r'^sentry/', include('sentry.web.urls')),

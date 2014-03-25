@@ -113,6 +113,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'notifications.context_processors.notification_processor',
     'cms.context_processors.media',
     'sekizai.context_processors.sekizai',
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount',
 )
 
 TEMPLATE_DIRS = (
@@ -159,7 +161,10 @@ TINYMCE_DEFAULT_CONFIG = {
 SKIP_SOUTH_TESTS = True
 SOUTH_TESTS_MIGRATE = False
 
-AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
 
 ROOT_URLCONF = 'urls'
 
@@ -168,6 +173,11 @@ INSTALLED_APPS = (
     'admin_tools.theming',
     'admin_tools.menu',
     'admin_tools.dashboard',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     'django.contrib.auth',
     'django.contrib.contenttypes',
