@@ -19,6 +19,8 @@ ADMIN_TOOLS_MEDIA_URL = "/static/"
 ADMIN_MEDIA_PREFIX = "/static/admin/"
 ADMIN_NAME="Adams School Admin"
 
+LOGIN_REDIRECT_URL = "/"
+
 USE_TZ=False
 
 DEBUG = True
