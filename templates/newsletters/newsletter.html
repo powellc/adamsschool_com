@@ -71,7 +71,7 @@ h1.p1, h2.p1, h3.p1 { padding-top:10px; font-size:12pt; }
           
           {% if object.header %}
           <tr>
-            <td align="center" valign="middle" style="position:relative; z-index:10; padding-top:0px;"><img src="{% thumbnail subject_location=object.header.subject_location object.header "800x440" crop="smart" %}" width="800" height="440" style="display:block; border:1px solid #ccc;">
+            <td align="center" valign="middle" style="position:relative; z-index:10; padding-top:0px;"><img src="{% thumbnail object.header "800x440" crop="smart" subject_location=object.header.subject_location %}" width="800" height="440" style="display:block; border:1px solid #ccc;">
               {% comment %}
               {% if object.header.name %}
               <p style="text-size:7pt; float:right; font-style:italic; color:#ccc; padding-right:10px; margin-top:0px;">{{object.header.name}}</p>
@@ -139,7 +139,7 @@ h1.p1, h2.p1, h3.p1 { padding-top:10px; font-size:12pt; }
           <tr>
             <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; padding:20px; font-size:16px; line-height:1.4em;">
                 {% if section.image %}
-                <img src="{% thumbnail subject_location=section.image.subject_location section.image.url 800x0 %}" class="{{section.image_position}}">
+                <img src="{% thumbnail section.image.url 800x0 subject_location=section.image.subject_location %}" class="{{section.image_position}}">
 		{% endif %}
         	{{ section.page_content|safe }}
 	        </td>
