@@ -139,7 +139,7 @@ h1.p1, h2.p1, h3.p1 { padding-top:10px; font-size:12pt; }
           <tr>
             <td align="left" valign="middle" style="font-family:Lucida Grande, Arial, 'Times New Roman', Times, serif; color:#000000; padding:20px; font-size:16px; line-height:1.4em;">
                 {% if section.image %}
-                <img src="{{section.image.url}}" class="{{section.image_position}}">
+                <img src="{% thumbnail section.image.url 800x0 %}" class="{{section.image_position}}">
 		{% endif %}
         	{{ section.page_content|safe }}
 	        </td>
