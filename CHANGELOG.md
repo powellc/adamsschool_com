@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+v1.0.2
+------
+
+  * Hooking up URL on the footer of the site. #16
+
 v1.0.1
 ------
 
