@@ -607,10 +607,6 @@ ul.errorlist li {
   margin: 0;
   margin-right: 1.2em;
 }
-.next {
-  position: absolute;
-  top: 200px;
-}
 div.article-body {
   clear: both;
   padding-top: 1em;
@@ -915,6 +911,7 @@ img {
   float: left;
   margin-right: 10px;
 }
+.paginator li { display:inline; margin-right: 6px; }
 .drop {
   top: 25px;
 }
