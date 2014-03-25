@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+v1.0.1
+------
+
+  * Fixing thumbnailing of newsletter section images
+
 v1.0.0
 ------
 
