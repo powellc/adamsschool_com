@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+v1.1.0
+------
+
+  * Adding django-allauth for Google logins. #2
+
 v1.0.2
 ------
 
