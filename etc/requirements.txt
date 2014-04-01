@@ -68,3 +68,4 @@ requests==2.2.1
 django-allauth==0.16.1
 
 raven==3.4.1
+django-bootstrap-form-3.1

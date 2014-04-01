@@ -175,6 +175,7 @@ INSTALLED_APPS = (
     'admin_tools.theming',
     'admin_tools.menu',
     'admin_tools.dashboard',
+    'bootstrapform',
 
     'allauth',
     'allauth.account',
@@ -238,6 +239,7 @@ INSTALLED_APPS = (
     'photologue',
     'classifieds',
 
+    'dashboard',
     'staff',
     'raven.contrib.django.raven_compat',
     #'apps.profiles',
