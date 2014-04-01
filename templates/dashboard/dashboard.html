@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<p class="square-btn">Add a blog post</p>
-<p class="square-btn">Add a new lunch menu</p>
+<a href="{% url add-post %}"><p class="square-btn"><i class="fonticon fa fa-edit"></i><br />Add new post</p></a>
+<a href="{% url add-menu %}"><p class="square-btn"><i class="fonticon fa fa-cutlery"></i><br />Add new lunch menu</p></a>
 
 {% endblock %}
