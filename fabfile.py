@@ -68,7 +68,7 @@ def v():
     env.key_filename = re.sub(r'^"|"$', '', result.split()[1])  # parse IdentityFile
 
 def ve(command):
-    with cd(env.home_dir + env.repo_name):
+    with cd(env.home_dir + 'code'):
         sudo("source %svenv/bin/activate" % env.home_dir + " && " + command, user=env.deploy_user)
 
 def collect():
