@@ -4,5 +4,6 @@
 
 <a href="{% url add-post %}"><p class="square-btn"><i class="fonticon fa fa-edit"></i><br />Add new post</p></a>
 <a href="{% url add-menu %}"><p class="square-btn"><i class="fonticon fa fa-cutlery"></i><br />Add new lunch menu</p></a>
+<a href="{% url update-profile request.user.get_profile.id %}"><p class="square-btn"><i class="fonticon fa fa-user"></i><br />Update profile</p></a>
 
 {% endblock %}

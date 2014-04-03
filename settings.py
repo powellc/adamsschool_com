@@ -38,6 +38,7 @@ LANGUAGE_CODE = 'en-us'
 MANAGERS = ADMINS
 USE_I18N = False
 USE_L10N = False
+AUTH_PROFILE_MODULE = 'profiles.UserProfile'
 
 MAILCHIMP_API_KEY='b2df48d27ce38006a9eb4decdf5000e0-us6'
 MAILCHIMP_WEBHOOK_KEY = 'k89al230oijlasdf89uj023ljlas'
@@ -241,9 +242,8 @@ INSTALLED_APPS = (
 
     'dashboard',
     'staff',
+    'profiles',
     'raven.contrib.django.raven_compat',
-    #'apps.profiles',
-
  )
 
 RAVEN_CONFIG = {
@@ -255,11 +255,11 @@ ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'dashboard.CustomAppIndexDashboard'
 #ZINNIA_ENTRY_BASE_MODEL = 'cmsplugin_zinnia.placeholder.EntryPlaceholder'
 
 THUMBNAIL_ALIASES = {
-        '': {
-             'slideshow': {'size': (1300, 800), 'crop': False},
-             'newsletter_header': {'size': (573, 238), 'crop': True},
-             'preview': {'size': (400, 400), 'crop': True},
-            },
+    '': {
+        'slideshow': {'size': (1300, 800), 'crop': False},
+        'newsletter_header': {'size': (573, 238), 'crop': True},
+        'preview': {'size': (400, 400), 'crop': True},
+    },
 }
 
 WUNDERGROUND_KEY = '71cb0db6cbef5334'

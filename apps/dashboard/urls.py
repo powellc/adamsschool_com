@@ -24,4 +24,7 @@ urlpatterns = patterns(
     url(r'^menus/$',
         view=views.ListMenus.as_view(),
         name="list-menus"),
+    url(r'^profile/update/(?P<pk>[\d_])/$',
+        view=views.UpdateProfile.as_view(),
+        name="update-profile"),
 )
