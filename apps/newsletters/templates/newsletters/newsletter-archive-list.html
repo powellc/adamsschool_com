@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block content %}
+<h2>Newsletter Archives</h2>
+<div id="staff-list">
+{% for edition in object_list %}
+        <dl class="staff">
+            <dt><a href="{{edition.get_absolute_url}}" alt="{{edition}}">{% if edition.header_caption %}{{edition.header_caption}}&mdash;{% endif %}{{edition.publish_on|date:"M j, Y"}}</a></dt>
+            {% if edition.header %}<dd class="mug"><img src="{% thumbnail edition.header '150x150' %}" /></dd>{% endif %}
+      </dl>
+{% endfor %}
+</div>
+{% endblock %}
