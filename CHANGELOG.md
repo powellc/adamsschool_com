@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+v1.2.0
+------
+
+  * Adding a dashboard for student adding of content
+
+v1.1.1
+------
+
+  * Adding an archive page for newsletters
+
 v1.1.0
 ------
 
