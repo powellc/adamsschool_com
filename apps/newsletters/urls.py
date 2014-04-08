@@ -24,7 +24,7 @@ urlpatterns = patterns(
         EditionListView.as_view(),
         name="newsletter-list"),
 
-    url(r'^/$',
+    url(r'^$',
         NewsletterView.as_view(),
         name="newsletter-latest")
 )
