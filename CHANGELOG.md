@@ -6,6 +6,11 @@ v1.2.0
 
   * Adding a dashboard for student adding of content
 
+v1.1.2
+------
+
+  * Minor fix to the newsletter archive template images
+
 v1.1.1
 ------
 
