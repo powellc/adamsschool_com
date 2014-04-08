@@ -47,7 +47,7 @@
             <div class="row">
                 <div class="top_menu">
                     <p>New blog post</p>&nbsp;&nbsp;<p>Update menu
-                       <span class="dismiss">Logged in as: {{request.user.email}}&nbsp;|&nbsp; <a href="{% url account_logout %}" class="">log out</a></p>
+                       <span class="dismiss">Logged in as: {{request.user.full_name}}&nbsp;|&nbsp; <a href="{% url account_logout %}" class="">log out</a></p>
                 </div>
             </div>
             {% endif %}
