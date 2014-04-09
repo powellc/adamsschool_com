@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block content %}
+<h2>Newsletter Archives</h2>
+<div id="staff-list">
+{% for edition in object_list %}
+      <dl class="staff" {% if edition.header %}style="background:url('{% thumbnail edition.header '300x300' %}') no-repeat;{% endif %}">
+            <dt><a href="{{edition.get_absolute_url}}" alt="{{edition}}">{% if edition.header_caption %}{{edition.header_caption}}&mdash;{% endif %}{{edition.publish_on|date:"M j, Y"}}</a></dt>
+      </dl>
+{% endfor %}
+</div>
+{% endblock %}
