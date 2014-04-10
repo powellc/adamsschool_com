@@ -1,5 +1,8 @@
+from django.conf import settings
+from django.db.models.loading import get_model
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView, TemplateView
+from braces import views
 
 from profiles.models import UserProfile
 from lunches.models import LunchMenu
@@ -7,13 +10,48 @@ from zinnia.models import Entry
 from .forms import EntryForm, ProfileForm
 
 
-class DashboardView(TemplateView):
+def lookup_model(model_name):
+    model = None
+    for app in settings.INSTALLED_APPS:
+        model = get_model(app, model_name)
+        if model:
+            break
+    return model
+
+
+class PermissionsView(views.LoginRequiredMixin,
+                      views.PermissionRequiredMixin):
+    permission_required = "dashboard.dashboard_access"
+
+
+class DashboardView(PermissionsView, TemplateView):
     template_name = 'dashboard/dashboard.html'
 
 
-class ListBlogPosts(ListView):
-    model = Entry
-    template_name = 'dashboard/list_posts.html'
+class DashboardModuleCreateView(PermissionsView, CreateView):
+    template_name = 'dashboard/module_form.html'
+
+    def get_queryset(self):
+        app_model = lookup_model(self.kwargs['app_name'])
+        return app_model.objects.all()
+
+
+class DashboardModuleUpdateView(PermissionsView, CreateView):
+    template_name = 'dashboard/module_form.html'
+
+    def get_queryset(self):
+        app_model = lookup_model(self.kwargs['app_name'])
+        return app_model.objects.all()
+
+
+
+class DashboardModuleView(ListView):
+    template_name = 'dashboard/list_objects.html'
+
+    def get_queryset(self, *args, **kwargs):
+        app_model = lookup_model(self.kwargs['app_name'])
+        return app_model.objects.all()
+
 
 
 class UpdateBlogPosts(UpdateView):
