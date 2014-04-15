@@ -34,7 +34,7 @@
       <div class="content">
       {% cms_toolbar %}
 
-        <div class="page-header ">
+        <div class="page-heade ">
             {% if top_notification %}
             <div class="row">
                 <div class="top_notification{% if hide_top_notification %} hide{% endif %}" data-timestamp="{{ top_notification.shown_since_as_timestamp }}">
@@ -46,8 +46,7 @@
             {% if request.user.is_authenticated %}
             <div class="row">
                 <div class="top_menu">
-                    <p>New blog post</p>&nbsp;&nbsp;<p>Update menu
-                       <span class="dismiss">Logged in as: {{request.user.full_name}}&nbsp;|&nbsp; <a href="{% url account_logout %}" class="">log out</a></p>
+                    <p class="float:right"><span class="dismiss">Welcome{% if request.user.fullname %}, {{request.user.full_name}}{% else %}, {{request.user.email}}{% endif %}&nbsp;|&nbsp; <a href="{% url account_logout %}" class="">Log out</a></p>
                 </div>
             </div>
             {% endif %}
