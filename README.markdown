@@ -1,6 +1,9 @@
 Adams School's Website
 ========================
 
+[![Build
+Status](https://travis-ci.org/powellc/adamsschool_com.svg?branch=develop)](https://travis-ci.org/powellc/adamsschool_com)
+
 Overview
 --------
 
