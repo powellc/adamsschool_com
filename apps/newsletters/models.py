@@ -33,6 +33,10 @@ class Edition(models.Model):
     header_description = models.TextField(_('Header description'), blank=True, null=True)
     published = models.BooleanField(_('Published'), default=False)
     publish_on = models.DateTimeField(_('Publish on'), default=datetime.now())
+    before_vacation = models.BooleanField(
+        _('Before vacation'), 
+        help_text='If this newsletter is before a vacation, check \
+                   for a lunch menu in the future')
     # This model also pulls in the current week's lunch menu
     # and any classifieds that are live in the classifieds app
 
@@ -62,7 +66,10 @@ class Edition(models.Model):
     def lunch_menu(self):
         ''' Returns the lunch menu for the newsletters date.
             If no such lunch menu exists, it returns none. '''
-        today = self.publish_on.date() + timedelta(weeks=1)
+        if self.before_vacation:
+            today = self.publish_on.date() + timedelta(weeks=2)
+        else:
+            today = self.publish_on.date() + timedelta(weeks=1)
         if today.weekday() < 5:  # If its Friday or earlier
             monday = today - timedelta(days=today.weekday())
         else:
@@ -71,6 +78,7 @@ class Edition(models.Model):
             menu = LunchMenu.objects.get(start_date=monday)
         except:
             menu = None
+
         return menu
 
 

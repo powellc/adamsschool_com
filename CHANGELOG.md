@@ -6,6 +6,11 @@ v1.2.0
 
   * Adding a dashboard for student adding of content
 
+v1.1.3
+------
+
+  * Fixing bug where lunch menu after vacation was not appearing
+
 v1.1.2
 ------
 
