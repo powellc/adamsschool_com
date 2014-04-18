@@ -1,6 +1,14 @@
 {% extends "base-no-menu.html" %}
 {% load bootstrap %}
 
+{% block top_content %}
+<ul class="submenu">
+    <li><a href="">Add entry</a></li>
+    <li><a href="">Add menu</a></li>
+    <li><a href="">Add notification</a></li>
+</ul>
+{% endblock %}
+
 {% block content %}
 
 <form method="post">{% csrf_token %}
