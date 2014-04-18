@@ -1,10 +1,10 @@
 CHANGELOG
 =========
 
-v1.2.0
+v1.1.3
 ------
 
-  * Adding a dashboard for student adding of content
+  * Fixing bug where lunch menu after vacation was not appearing
 
 v1.1.2
 ------
