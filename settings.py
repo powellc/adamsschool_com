@@ -53,6 +53,17 @@ TIME_ZONE = 'America/New_York'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 
+# Override this in local_settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'HOST': '127.0.0.1',
+        'NAME': 'dev.db',  # Or path to database file if using sqlite3.
+        'USER': '',
+        'PASSWORD': '',
+    }
+}
+
 import logging
 
 LOG_DATE_FORMAT = '%d %b %Y %H:%M:%S'
