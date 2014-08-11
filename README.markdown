@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/powellc/adamsschool_com.png?label=ready&title=Ready)](https://waffle.io/powellc/adamsschool_com)
 Adams School's Website
 ========================
 
