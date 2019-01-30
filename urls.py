@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     (r'^newsletter/', include('newsletters.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^news/', include('zinnia.urls')),
+    (r'^dashboard/', include('dashboard.urls')),
     (r'^robots.txt$', include('robots.urls')),
     url(r'^', include('cms.urls')),
 ) + staticfiles_urlpatterns()

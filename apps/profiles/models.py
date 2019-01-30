@@ -17,10 +17,14 @@ class UserProfile(models.Model):
     def age(self):
         if self.birthday:
             today = date.today()
-            try: # raised when birth date is February 29 and the current year is not a leap year
+            # raised when birth date is February 29 and the current year
+            # is not a leap year
+            try:
                 birthday = self.birthday.replace(year=today.year)
             except ValueError:
-                birthday = self.birthday.replace(year=today.year, day=self.birthday.day-1)
+                birthday = self.birthday.replace(
+                    year=today.year,
+                    day=self.birthday.day-1)
             if birthday > today:
                 return today.year - self.birthday.year - 1
             else:
@@ -37,11 +41,23 @@ class UserProfile(models.Model):
 
     @property
     def blogs(self):
-        blogs=[]
-	for b in Blog.published_objects.all():
-           if self.user in b.authors.all():
-               blogs.append(b)
+        blogs = []
+        for b in Blog.published_objects.all():
+            if self.user in b.authors.all():
+                blogs.append(b)
         return blogs
 
     def __unicode__(self):
         return self.full_name + "'s profile"
+
+
+def get_or_create_profile(user):
+    """
+    Return the UserProfile for the given user, creating one if it does not exist.
+
+    This will also set user.profile to cache the result.
+    """
+    user.profile, c = UserProfile.objects.get_or_create(user=user)
+    return user.profile
+
+User.profile = property(get_or_create_profile)

@@ -19,6 +19,8 @@
         <link rel="stylesheet" media="all" href="{{STATIC_URL}}css/slidorion.css"/>
         <link rel="stylesheet" media="print" href="{{STATIC_URL}}css/print.css"/>
         <link rel="stylesheet/less" type="text/css" media="all" href="{{STATIC_URL}}css/main.less"/>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <style>h3 { margin-left:1em; } .fonticon{font-size:102pt; }.square-btn{padding-top:1em; height:160px;text-align:center;}</style>
         {% block extra_css %}{% endblock %}
 
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -32,7 +34,7 @@
       <div class="content">
       {% cms_toolbar %}
 
-        <div class="page-header ">
+        <div class="page-heade ">
             {% if top_notification %}
             <div class="row">
                 <div class="top_notification{% if hide_top_notification %} hide{% endif %}" data-timestamp="{{ top_notification.shown_since_as_timestamp }}">
@@ -44,30 +46,12 @@
             {% if request.user.is_authenticated %}
             <div class="row">
                 <div class="top_menu">
-                    <p>New blog post</p>&nbsp;&nbsp;<p>Update menu
-                       <span class="dismiss">Logged in as: {{request.user.email}}&nbsp;|&nbsp; <a href="{% url account_logout %}" class="">log out</a></p>
+                    <p class="float:right"><span class="dismiss">Welcome{% if request.user.fullname %}, {{request.user.full_name}}{% else %}, {{request.user.email}}{% endif %}&nbsp;|&nbsp; <a href="{% url account_logout %}" class="">Log out</a></p>
                 </div>
             </div>
             {% endif %}
-          <div class="row">
-            {% current_weather '04421' %}
-            <div class="span6">
-              <a href="/"><h1>Adams School</h1></a>
-            </div>
-            <div class="span4 teaser">
-              <a href="{{ SITE_URL }}/newsletter/"><img src="{{ STATIC_URL }}img/lighthouse-teaser.png" width=292 height=84 ></a>
-              <a style="float:right; padding-top:5px; padding-right:15px; " href="{{SITE_URL}}/newsletter/">View the latest issue &raquo;</a>
-            </div>
-          </div>
-          <div class="row">
-            <div class="menu span15">
-              <ul class="">
-                {% show_menu 0 0 0 0 "menu/main_nav_menu.html" %}
-              </ul>
-            </div>
-          </div>
-          {% block submenu %}
-          {% endblock %}
+            <h3>Adams School Dashboard</h3>
+          <hr />
           <div id="top-content" class="row">
             {% block top_content %} {% endblock %}
           </div>

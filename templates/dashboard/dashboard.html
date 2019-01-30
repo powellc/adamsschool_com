@@ -1,0 +1,10 @@
+{% extends "base-no-menu.html" %}
+
+{% block content %}
+
+{{params.slug}}
+<a href="{% url dashboard-module-create params.slug 'entry' %}"><p class="square-btn"><i class="fonticon fa fa-edit"></i><br />Add new post</p></a>
+<a href="{% url dashboard-module-create params.slug 'lunchmenu' %}"><p class="square-btn"><i class="fonticon fa fa-cutlery"></i><br />Add new lunch menu</p></a>
+<a href="{% url update-profile request.user.get_profile.id %}"><p class="square-btn"><i class="fonticon fa fa-user"></i><br />Update profile</p></a>
+
+{% endblock %}

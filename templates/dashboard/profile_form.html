@@ -1,0 +1,11 @@
+{% extends "base-no-menu.html" %}
+{% load bootstrap %}
+
+{% block content %}
+
+<form method="post">{% csrf_token %}
+{{form|bootstrap_horizontal}}
+<input type="submit" value="Save" />
+</form>
+
+{% endblock %}

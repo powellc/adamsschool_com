@@ -8,7 +8,7 @@ cmsplugin-filer-audio==0.2
 cmsplugin-nivoslider==0.5.2
 -e git+https://github.com/raphaa/cmsplugin-photologue-pro.git@22a208914a6e5e6110f0a603d3df6ba94df36dde#egg=cmsplugin_photologue_pro-dev
 cmsplugin-zinnia==0.3
-django-admin-tools==0.4.0
+django-admin-tools==0.5.1
 django-blog-zinnia==0.11.2
 django-classroom==0.1.0
 django-classy-tags==0.3.4.1
@@ -60,3 +60,5 @@ requests==2.2.1
 django-allauth==0.16.1
 
 raven==3.4.1
+django-bootstrap-form-3.1
+django-braces==1.4.0
